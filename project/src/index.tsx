@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
-const Setting = {
+type SettingType = {
+  cardCount:number;
+}
+
+const Setting:SettingType = {
   cardCount: 5,
 } as const;
 

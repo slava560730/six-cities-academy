@@ -1,11 +1,11 @@
 import {Card} from '../../components/card/card';
 import {Header} from '../../components/header/header';
 
-type cardProps = {
+type mainPageProps = {
   cardCount: number;
 }
 
-function MainPage ({cardCount}: cardProps): JSX.Element {
+function MainPage ({cardCount}: mainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header/>
