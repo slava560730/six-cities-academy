@@ -7,12 +7,16 @@ import {LoginPage} from '../../pages/login/login-page';
 import {PropertyNotLoggedPage} from '../../pages/property-not-logged/property-not-logged';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import {OfferType, HostType, ReviewsType} from '../../types/property';
 
 type AppProps = {
   cardCount: number;
+  offers: OfferType[];
+  host: HostType;
+  reviews: ReviewsType;
 };
 
-function App({ cardCount }: AppProps): JSX.Element {
+function App({cardCount, offers, host, reviews}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
