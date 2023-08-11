@@ -1,5 +1,3 @@
-import { type } from "os";
-
 type FeaturesType = {
   entire: string;
   bedrooms: number | string;
@@ -32,7 +30,10 @@ type ReviewsType = {
   count: number;
   src: string;
   userName: string;
-  text: string;
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
 };
 
 export type {OfferType, ReviewsType};
