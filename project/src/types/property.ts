@@ -7,20 +7,25 @@ type FeaturesType = {
 };
 
 type OfferType = {
-  src: string[];
+  cityName: string;
+  locationLat: number;
+  locationLong: number;
+  locationZoom: number;
+  imageSrc: string[];
   mark: string;
-  name: string;
+  title: string;
   rating: number;
+  isFavorite: boolean;
   features: FeaturesType;
   price: number | string;
   insideItem: string[];
-};
-
-type HostType = {
-  src: string;
-  name: string;
-  status: string;
-  text: string;
+  hostId: number;
+  hostSrc: string;
+  hostName: string;
+  hostStatus: string;
+  hostDescription: string;
+  cardSrc: string;
+  id: number;
 };
 
 type ReviewsType = {
@@ -30,4 +35,4 @@ type ReviewsType = {
   text: string;
 };
 
-export type {OfferType, HostType, ReviewsType};
+export type {OfferType, ReviewsType};

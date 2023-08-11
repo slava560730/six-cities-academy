@@ -1,4 +1,4 @@
-import {ReviewsType} from "../types/property"
+import {ReviewsType} from '../types/property';
 
 const reviews:ReviewsType = {
   count: 1,

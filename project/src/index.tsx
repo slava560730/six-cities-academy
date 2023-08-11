@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {offers} from './mocks/offers';
-import {host} from './mocks/host';
 import {reviews} from './mocks/reviews';
 
 type SettingType = {
@@ -10,7 +9,7 @@ type SettingType = {
 }
 
 const Setting:SettingType = {
-  cardCount: 5,
+  cardCount: offers.length,
 } as const;
 
 const root = ReactDOM.createRoot(
@@ -22,7 +21,6 @@ root.render(
     <App
       cardCount = {Setting.cardCount}
       offers={offers}
-      host={host}
       reviews={reviews}
     />
   </React.StrictMode>,
