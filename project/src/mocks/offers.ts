@@ -30,7 +30,7 @@ const offers: OfferType[] = [
     id:1,
   },
   {
-    cityName: 'Amsterdam',
+    cityName: 'Paris',
     locationLat: 52.37454,
     locationLong: 4.897976,
     locationZoom: 3,
@@ -58,7 +58,7 @@ const offers: OfferType[] = [
     id:1,
   },
   {
-    cityName: 'Amsterdam',
+    cityName: 'Brussels',
     locationLat: 52.37454,
     locationLong: 4.897976,
     locationZoom: 3,
@@ -86,7 +86,7 @@ const offers: OfferType[] = [
     id:1,
   },
   {
-    cityName: 'Amsterdam',
+    cityName: 'Hamburg',
     locationLat: 52.37454,
     locationLong: 4.897976,
     locationZoom: 3,
