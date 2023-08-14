@@ -4,22 +4,25 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {FavoritesPage} from '../../pages/favorites/favorites-page';
 import {LoginPage} from '../../pages/login/login-page';
-import {PropertyNotLoggedPage} from '../../pages/property-not-logged/property-not-logged';
+import {PropetyPage} from '../../pages/property/property';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import {OfferType, ReviewsType} from '../../types/property';
 
 type AppProps = {
   cardCount: number;
+  offers: OfferType[];
+  reviews: ReviewsType;
 };
 
-function App({ cardCount }: AppProps): JSX.Element {
+function App({cardCount, offers, reviews}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage cardCount={cardCount} />}
+            element={<MainPage cardCount={cardCount} offers={offers} />}
           />
           <Route
             path={AppRoute.Login}
@@ -27,13 +30,13 @@ function App({ cardCount }: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<PropertyNotLoggedPage />}
+            element={<PropetyPage reviews={reviews}/>}
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesPage />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesPage offers={offers} />
               </PrivateRoute>
             }
           />
