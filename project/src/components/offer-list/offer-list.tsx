@@ -1,10 +1,9 @@
 import {OfferType} from '../../types/property';
-import React from 'react';
 import {Card} from '../card/card';
 
 type OfferListProps = {
   offers: OfferType[];
-  setActiveCard: React.Dispatch<React.SetStateAction<number>>;
+  setActiveCard(value: number): void;
 };
 
 function OfferList({offers, setActiveCard}: OfferListProps): JSX.Element {

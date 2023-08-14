@@ -4,7 +4,7 @@ import React from 'react';
 
 type CardProps = {
   offer: OfferType;
-  setActiveCard: React.Dispatch<React.SetStateAction<number>>;
+  setActiveCard(value: number): void;
 };
 
 function Card ({offer, setActiveCard}: CardProps): JSX.Element {

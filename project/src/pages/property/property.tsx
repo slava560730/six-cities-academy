@@ -2,7 +2,6 @@ import {Header} from '../../components/header/header';
 import {AddFormReview} from '../../components/add-form-review/add-form-review';
 import { Helmet } from 'react-helmet-async';
 import {ReviewsType} from '../../types/property';
-// import {reviews} from "../../mocks/reviews";
 
 type PropetyPageProps = {
   reviews: ReviewsType;
