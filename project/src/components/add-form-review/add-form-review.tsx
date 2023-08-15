@@ -1,8 +1,9 @@
 import {ReviewsType} from '../../types/property';
+import { AddReviewsList } from '../reviews-list/reviews-list';
 import {useState} from 'react';
 
 type AddFormReviewProps = {
-  reviews: ReviewsType;
+  reviews: ReviewsType[];
 };
 
 function AddFormReview ({reviews}: AddFormReviewProps): JSX.Element{
@@ -20,30 +21,8 @@ function AddFormReview ({reviews}: AddFormReviewProps): JSX.Element{
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.count}</span></h2>
-      <ul className="reviews__list">
-        <li className="reviews__item">
-          <div className="reviews__user user">
-            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-              <img className="reviews__avatar user__avatar" src={reviews.src} width="54" height="54" alt="Reviews avatar"/>
-            </div>
-            <span className="reviews__user-name">{reviews.userName}
-            </span>
-          </div>
-          <div className="reviews__info">
-            <div className="reviews__rating rating">
-              <div className="reviews__stars rating__stars">
-                <span style={{ width: '80%'}}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
-            </div>
-            <p className="reviews__text">
-              {reviews.comment}
-            </p>
-            <time className="reviews__time" dateTime="2019-04-24">{reviews.date}</time>
-          </div>
-        </li>
-      </ul>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <AddReviewsList reviews={reviews}/>
       <form className="reviews__form form" action="#" method="post">
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">

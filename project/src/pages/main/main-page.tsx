@@ -1,5 +1,6 @@
 import {Header} from '../../components/header/header';
-import {City, OfferType} from '../../types/property';
+import {OfferType} from '../../types/property';
+import { city, classNamesMap } from '../../const';
 import {OfferList} from '../../components/offer-list/offer-list';
 import {useState} from 'react';
 import {Map} from '../../components/map/map';
@@ -8,13 +9,6 @@ type mainPageProps = {
   cardCount: number;
   offers: OfferType[];
 }
-
-const city: City = {
-  cityName: 'Amsterdam',
-  locationLat: 52.3909553943508,
-  locationLong:4.85309666406198,
-  locationZoom: 10,
-};
 
 function MainPage ({cardCount, offers}: mainPageProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(500);
@@ -87,7 +81,7 @@ function MainPage ({cardCount, offers}: mainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} offers={offers} selectedOffer={selectedOffer}></Map>
+                <Map city={city} offers={offers} selectedOffer={selectedOffer} classNameMap={classNamesMap.Main}></Map>
               </section>
             </div>
           </div>

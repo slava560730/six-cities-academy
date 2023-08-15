@@ -31,6 +31,14 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:4,
+    nearcard: {
+      src: 'img/room.jpg',
+      price: 100,
+      isFavorite: false,
+      title: 'Wood and stone place',
+      features: 'House',
+      id: 1,
+    },
   },
   {
     city:
@@ -62,6 +70,14 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:1,
+    nearcard: {
+      src: 'img/room.jpg',
+      price: 100,
+      isFavorite: false,
+      title: 'Wood and stone place',
+      features: 'House',
+      id: 10,
+    },
   },
   {
     city:
@@ -93,6 +109,14 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:2,
+    nearcard: {
+      src: 'img/room.jpg',
+      price: 100,
+      isFavorite: false,
+      title: 'Wood and stone place',
+      features: 'House',
+      id: 3,
+    },
   },
   {
     city:
@@ -124,6 +148,14 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:3,
+    nearcard: {
+      src: 'img/room.jpg',
+      price: 100,
+      isFavorite: false,
+      title: 'Wood and stone place',
+      features: 'House',
+      id: 11,
+    },
   },
 ];
 

@@ -6,11 +6,11 @@ type CardProps = {
   setSelectedOffer(value: number): void;
 };
 
-function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
+function NearCard ({offer:{nearcard}, setSelectedOffer}: CardProps): JSX.Element {
   return (
     <article
       onMouseOver={() => {
-        setSelectedOffer(offer.id);
+        setSelectedOffer(nearcard.id);
       }}
       className="cities__card place-card"
     >
@@ -18,19 +18,19 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={offer.cardSrc} width="260" height="200" alt="Place image"/>
+        <Link to={`/offer/${nearcard.id}`}>
+          <img className="place-card__image" src={nearcard.src} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{nearcard.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
             className={`${
-              offer.isFavorite ? 'place-card__bookmark-button--active' : ''
+              nearcard.isFavorite ? 'place-card__bookmark-button--active' : ''
             } place-card__bookmark-button button`}
             type="button"
           >
@@ -47,12 +47,12 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${nearcard.id}`}>{nearcard.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.features.entire}</p>
+        <p className="place-card__type">{nearcard.features}</p>
       </div>
     </article>
   );
 }
 
-export {Card};
+export {NearCard};
