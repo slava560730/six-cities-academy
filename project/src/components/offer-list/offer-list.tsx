@@ -3,14 +3,14 @@ import {Card} from '../card/card';
 
 type OfferListProps = {
   offers: OfferType[];
-  setActiveCard(value: number): void;
+  setSelectedOffer(value: number): void;
 };
 
-function OfferList({offers, setActiveCard}: OfferListProps): JSX.Element {
+function OfferList({offers, setSelectedOffer}: OfferListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <Card setActiveCard={setActiveCard} key={offer.id} offer={offer} />
+        <Card setSelectedOffer={setSelectedOffer} key={offer.id} offer={offer} />
       ))}
     </div>
   );

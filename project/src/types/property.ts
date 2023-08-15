@@ -1,3 +1,10 @@
+type City = {
+  cityName: string;
+  locationLat: number;
+  locationLong: number;
+  locationZoom: number;
+};
+
 type FeaturesType = {
   entire: string;
   bedrooms: number | string;
@@ -5,10 +12,7 @@ type FeaturesType = {
 };
 
 type OfferType = {
-  cityName: string;
-  locationLat: number;
-  locationLong: number;
-  locationZoom: number;
+  city: City;
   imageSrc: string[];
   mark: string;
   title: string;
@@ -36,4 +40,4 @@ type ReviewsType = {
   rating: number;
 };
 
-export type {OfferType, ReviewsType};
+export type {OfferType, ReviewsType, City};

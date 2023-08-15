@@ -4,14 +4,14 @@ import React from 'react';
 
 type CardProps = {
   offer: OfferType;
-  setActiveCard(value: number): void;
+  setSelectedOffer(value: number): void;
 };
 
-function Card ({offer, setActiveCard}: CardProps): JSX.Element {
+function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
   return (
     <article
       onMouseOver={() => {
-        setActiveCard(offer.id);
+        setSelectedOffer(offer.id);
       }}
       className="cities__card place-card"
     >
