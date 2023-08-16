@@ -6,8 +6,7 @@ import {Map} from '../../components/map/map';
 import {city, classNamesMap} from '../../const';
 import {OfferType} from '../../types/property';
 import { useState } from 'react';
-import { NearCardList } from '../../components/near-card-list/near-card-list';
-// import { Navigate, useParams } from 'react-router-dom';
+import {Card} from '../../components/card/card';
 
 type PropetyPageProps = {
   reviews: ReviewsType[];
@@ -15,8 +14,7 @@ type PropetyPageProps = {
 }
 
 function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
-  // const params = useParams();
-  // const id = Number(params.id);
+  const nearOffers = offers.filter((offer) => offer.id);
   const [selectedOffer, setSelectedOffer] = useState(500);
   return (
     <div className="page">
@@ -155,7 +153,9 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearCardList offers={offers} setSelectedOffer={setSelectedOffer} />
+              {nearOffers.map((offer) => (
+                <Card offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
+              ))}
             </div>
           </section>
         </div>
