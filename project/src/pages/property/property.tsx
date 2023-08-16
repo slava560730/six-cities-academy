@@ -8,12 +8,12 @@ import {OfferType} from '../../types/property';
 import { useState } from 'react';
 import {Card} from '../../components/card/card';
 
-type PropetyPageProps = {
+type PropertyPageProps = {
   reviews: ReviewsType[];
   offers: OfferType[];
 }
 
-function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
+function PropertyPage ({offers, reviews}: PropertyPageProps): JSX.Element {
   const nearOffers = offers.filter((offer) => offer.id);
   const [selectedOffer, setSelectedOffer] = useState(500);
   return (
@@ -164,4 +164,4 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
   );
 }
 
-export {PropetyPage};
+export {PropertyPage};

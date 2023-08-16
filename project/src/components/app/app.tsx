@@ -4,7 +4,7 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {FavoritesPage} from '../../pages/favorites/favorites-page';
 import {LoginPage} from '../../pages/login/login-page';
-import {PropetyPage} from '../../pages/property/property';
+import {PropertyPage} from '../../pages/property/property';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType, ReviewsType} from '../../types/property';
@@ -30,7 +30,7 @@ function App({cardCount, offers, reviews}: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<PropetyPage reviews={reviews} offers={offers}/>}
+            element={<PropertyPage reviews={reviews} offers={offers}/>}
           />
           <Route
             path={AppRoute.Favorites}
