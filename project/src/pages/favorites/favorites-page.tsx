@@ -10,7 +10,7 @@ type FavoriteProps = {
 
 function FavoritesPage({offers}: FavoriteProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const citiesFavoriteOffers = new Set(favoriteOffers.map((offer) => offer.cityName));
+  const citiesFavoriteOffers = new Set(favoriteOffers.map((offer) => offer.city.cityName));
 
   return (
     <div className="page">
@@ -35,7 +35,7 @@ function FavoritesPage({offers}: FavoriteProps): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {favoriteOffers.map((offer) =>
-                      city === offer.cityName ? <FavoriteCard key={offer.id} offer={offer} /> : ''
+                      city === offer.city.cityName ? <FavoriteCard key={offer.id} offer={offer} /> : ''
                     )}
                   </div>
                 </li>

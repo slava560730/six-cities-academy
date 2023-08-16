@@ -1,3 +1,19 @@
+type City = {
+  cityName: string;
+  locationLat: number;
+  locationLong: number;
+  locationZoom: number;
+};
+
+type NearCard = {
+  src: string;
+  price: number;
+  isFavorite: boolean;
+  title: string;
+  features: string;
+  id: number;
+};
+
 type FeaturesType = {
   entire: string;
   bedrooms: number | string;
@@ -5,10 +21,7 @@ type FeaturesType = {
 };
 
 type OfferType = {
-  cityName: string;
-  locationLat: number;
-  locationLong: number;
-  locationZoom: number;
+  city: City;
   imageSrc: string[];
   mark: string;
   title: string;
@@ -24,10 +37,10 @@ type OfferType = {
   hostDescription: string;
   cardSrc: string;
   id: number;
+  nearcard: NearCard;
 };
 
 type ReviewsType = {
-  count: number;
   src: string;
   userName: string;
   comment: string;
@@ -36,4 +49,4 @@ type ReviewsType = {
   rating: number;
 };
 
-export type {OfferType, ReviewsType};
+export type {OfferType, ReviewsType, City};

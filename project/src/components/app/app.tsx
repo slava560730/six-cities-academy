@@ -12,7 +12,7 @@ import {OfferType, ReviewsType} from '../../types/property';
 type AppProps = {
   cardCount: number;
   offers: OfferType[];
-  reviews: ReviewsType;
+  reviews: ReviewsType[];
 };
 
 function App({cardCount, offers, reviews}: AppProps): JSX.Element {
@@ -30,7 +30,7 @@ function App({cardCount, offers, reviews}: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<PropetyPage reviews={reviews}/>}
+            element={<PropetyPage reviews={reviews} offers={offers}/>}
           />
           <Route
             path={AppRoute.Favorites}

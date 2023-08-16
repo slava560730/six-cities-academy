@@ -1,17 +1,16 @@
 import {OfferType} from '../../types/property';
 import {Link} from 'react-router-dom';
-import React from 'react';
 
 type CardProps = {
   offer: OfferType;
-  setActiveCard: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedOffer(value: number): void;
 };
 
-function Card ({offer, setActiveCard}: CardProps): JSX.Element {
+function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
   return (
     <article
       onMouseOver={() => {
-        setActiveCard(offer.id);
+        setSelectedOffer(offer.id);
       }}
       className="cities__card place-card"
     >
