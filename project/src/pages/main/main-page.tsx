@@ -1,9 +1,11 @@
 import {Header} from '../../components/header/header';
 import {OfferType} from '../../types/property';
-import { city, classNamesMap } from '../../const';
+// import { city, classNamesMap } from '../../const';
 import {OfferList} from '../../components/offer-list/offer-list';
 import {useState} from 'react';
-import {Map} from '../../components/map/map';
+// import {Map} from '../../components/map/map';
+import {CityList} from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks';
 
 type mainPageProps = {
   cardCount: number;
@@ -12,6 +14,7 @@ type mainPageProps = {
 
 function MainPage ({cardCount, offers}: mainPageProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(500);
+  const city = useAppSelector((state) => state.city);
 
   return (
     <div className="page page--gray page--main">
@@ -21,38 +24,7 @@ function MainPage ({cardCount, offers}: mainPageProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CityList/>
           </section>
         </div>
         <div className="cities">
@@ -81,7 +53,7 @@ function MainPage ({cardCount, offers}: mainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} offers={offers} selectedOffer={selectedOffer} classNameMap={classNamesMap.Main}></Map>
+                {/*<Map city={city} offers={offers} selectedOffer={selectedOffer} classNameMap={classNamesMap.Main}></Map>*/}
               </section>
             </div>
           </div>
