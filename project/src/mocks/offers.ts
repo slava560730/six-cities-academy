@@ -4,12 +4,12 @@ const offers: OfferType[] = [
   {
     city:
       {
-        cityName: 'Amsterdam',
+        cityName: 'Paris',
         locationLat: 52.3909553943508,
         locationLong: 4.85309666406198,
         locationZoom: 10,
       },
-    imageSrc: ['img/apartment-01.jpg', 'img/apartment-01.jpg', 'img/apartment-01.jpg'],
+    imageSrc: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-01.jpg'],
     mark: 'Premium',
     title: 'Beautiful &amp; luxurious studio at great location',
     rating: 4.5,
@@ -29,9 +29,9 @@ const offers: OfferType[] = [
     hostName: 'Angelina',
     hostStatus: 'Pro',
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-    cardSrc: 'img/apartment-01.jpg',
+    cardSrc: 'img/apartment-02.jpg',
     id:4,
-    nearcard: {
+    nearCard: {
       src: 'img/room.jpg',
       price: 100,
       isFavorite: false,
@@ -70,7 +70,7 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:1,
-    nearcard: {
+    nearCard: {
       src: 'img/room.jpg',
       price: 100,
       isFavorite: false,
@@ -109,7 +109,7 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:2,
-    nearcard: {
+    nearCard: {
       src: 'img/room.jpg',
       price: 100,
       isFavorite: false,
@@ -148,7 +148,7 @@ const offers: OfferType[] = [
     hostDescription: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     cardSrc: 'img/apartment-01.jpg',
     id:3,
-    nearcard: {
+    nearCard: {
       src: 'img/room.jpg',
       price: 100,
       isFavorite: false,

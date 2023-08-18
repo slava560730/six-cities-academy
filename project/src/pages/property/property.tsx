@@ -3,7 +3,7 @@ import {AddFormReview} from '../../components/add-form-review/add-form-review';
 import {Helmet} from 'react-helmet-async';
 import {ReviewsType} from '../../types/property';
 import {Map} from '../../components/map/map';
-import {city, classNamesMap} from '../../const';
+import {classNamesMap} from '../../const';
 import {OfferType} from '../../types/property';
 import { useState } from 'react';
 import {Card} from '../../components/card/card';
@@ -146,7 +146,7 @@ function PropertyPage ({offers, reviews}: PropertyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={offers} selectedOffer={selectedOffer} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={selectedOffer} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">

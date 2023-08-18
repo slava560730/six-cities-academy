@@ -6,12 +6,12 @@ const INITIAL_CITY = 'Paris';
 
 type InitialStateType = {
   city: string;
-  offerList: OfferType[];
+  offerCity: OfferType[];
 };
 
 const initialState: InitialStateType = {
   city: INITIAL_CITY,
-  offerList: [],
+  offerCity: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -20,7 +20,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload.city;
     })
     .addCase(fillOfferList, (state, action) => {
-      state.offerList = action.payload.offersCity;
+      state.offerCity = action.payload.offersCity;
     });
 });
 

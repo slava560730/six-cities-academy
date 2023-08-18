@@ -1,19 +1,28 @@
 import {useEffect, useState, MutableRefObject, useRef} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import {City} from '../types/property';
+import {useAppSelector} from './index';
+import {defaultCity} from '../const';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map | null {
+function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
+  const city = useAppSelector((state) => state.city);
+  const offersCity = useAppSelector((state) => state.offerCity);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const currentCity: City = offersCity.find((offer) => offer.city.cityName === city)?.city || defaultCity;
+
+  const locationLat = currentCity.locationLat;
+  const locationLong = currentCity.locationLong;
+  const zoom = currentCity.locationZoom;
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.locationLat,
-          lng: city.locationLong
+          lat: locationLat,
+          lng: locationLong
         },
-        zoom: 10
+        zoom: zoom
       });
 
       const layer = new TileLayer(

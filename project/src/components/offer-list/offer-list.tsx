@@ -1,15 +1,16 @@
-import {OfferType} from '../../types/property';
+import {useAppSelector} from '../../hooks';
 import {Card} from '../card/card';
 
 type OfferListProps = {
-  offers: OfferType[];
   setSelectedOffer(value: number): void;
 };
 
-function OfferList({offers, setSelectedOffer}: OfferListProps): JSX.Element {
+function OfferList({setSelectedOffer}: OfferListProps): JSX.Element {
+  const offersCity = useAppSelector((state) => state.offerCity);
+
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
+      {offersCity.map((offer) => (
         <Card setSelectedOffer={setSelectedOffer} key={offer.id} offer={offer} />
       ))}
     </div>

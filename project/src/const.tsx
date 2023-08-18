@@ -13,13 +13,6 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const city: City = {
-  cityName: 'Amsterdam',
-  locationLat: 52.3909553943508,
-  locationLong:4.85309666406198,
-  locationZoom: 10,
-};
-
 const URL_MARKER_DEFAULT = '../../img/pin.svg';
 const URL_MARKER_CURRENT = '../../img/pin-active.svg';
 
@@ -32,4 +25,11 @@ export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, c
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export {city,CITIES};
+const defaultCity: City = {
+  cityName: 'Paris',
+  locationLat: 52.3909553943508,
+  locationLong: 4.85309666406198,
+  locationZoom: 10,
+};
+
+export {defaultCity, CITIES};

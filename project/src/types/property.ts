@@ -37,7 +37,7 @@ type OfferType = {
   hostDescription: string;
   cardSrc: string;
   id: number;
-  nearcard: NearCard;
+  nearCard: NearCard;
 };
 
 type ReviewsType = {
