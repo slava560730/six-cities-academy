@@ -6,13 +6,13 @@ import {reviews} from './mocks/reviews';
 import {Provider} from 'react-redux';
 import { store } from './store';
 
-type SettingType = {
-  cardCount:number;
-}
+// type SettingType = {
+//   cardCount:number;
+// }
 
-const Setting:SettingType = {
-  cardCount: offers.length,
-} as const;
+// const Setting:SettingType = {
+//   cardCount: offers.length,
+// } as const;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -22,7 +22,6 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       <App
-        cardCount = {Setting.cardCount}
         offers={offers}
         reviews={reviews}
       />

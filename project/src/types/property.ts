@@ -16,25 +16,30 @@ type NearCard = {
 
 type FeaturesType = {
   entire: string;
-  bedrooms: number | string;
-  adults: number | string;
+  bedrooms: number;
+  adults: number;
+};
+
+type HostType = {
+  hostId: number;
+  hostSrc: string;
+  hostName: string;
+  hostStatus: boolean;
+  hostDescription: string;
 };
 
 type OfferType = {
   city: City;
-  imageSrc: string[];
+  imagesSrc: string[];
+  imagesAlt: string;
   mark: string;
   title: string;
   rating: number;
   isFavorite: boolean;
   features: FeaturesType;
   price: number | string;
-  insideItem: string[];
-  hostId: number;
-  hostSrc: string;
-  hostName: string;
-  hostStatus: string;
-  hostDescription: string;
+  insideItems: string[];
+  host: HostType;
   cardSrc: string;
   id: number;
   nearCard: NearCard;

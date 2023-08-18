@@ -6,12 +6,7 @@ import {Map} from '../../components/map/map';
 import {CityList} from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 
-type mainPageProps = {
-  cardCount: number;
-  // offers: OfferType[];
-}
-
-function MainPage ({cardCount}: mainPageProps): JSX.Element {
+function MainPage (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(500);
   const city = useAppSelector((state) => state.city);
   const offersCity = useAppSelector((state) => state.offerCity);
