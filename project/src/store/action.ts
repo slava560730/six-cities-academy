@@ -7,12 +7,12 @@ const changeCity = createAction('CHANGE_CITY',(city: string) => ({
   },
 }));
 const fillOfferList = createAction('FILL_OFFER_LIST',(city: string) => {
-  const offersCity = offers.filter((offer) => offer.city.cityName === city);
 
   return {
     payload: {
-      offersCity: offersCity,
+      city:city,
     },
   };
 });
+// const sortCards = createAction('SORT_CARDS',)
 export {changeCity, fillOfferList};

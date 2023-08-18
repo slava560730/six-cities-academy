@@ -28,10 +28,15 @@ type HostType = {
   hostDescription: string;
 };
 
+type ImagesType = {
+  imageSrc: string;
+  imageAlt: string;
+  id: number;
+};
+
 type OfferType = {
   city: City;
-  imagesSrc: string[];
-  imagesAlt: string;
+  images: ImagesType[];
   mark: string;
   title: string;
   rating: number;
