@@ -6,14 +6,6 @@ import {reviews} from './mocks/reviews';
 import {Provider} from 'react-redux';
 import { store } from './store';
 
-// type SettingType = {
-//   cardCount:number;
-// }
-
-// const Setting:SettingType = {
-//   cardCount: offers.length,
-// } as const;
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
