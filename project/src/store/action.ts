@@ -1,18 +1,57 @@
 import {createAction} from '@reduxjs/toolkit';
-import {offers} from '../mocks/offers';
+import {OfferType} from '../types/property';
+import {SortType} from '../const';
 
 const changeCity = createAction('CHANGE_CITY',(city: string) => ({
   payload: {
     city,
   },
 }));
-const fillOfferList = createAction('FILL_OFFER_LIST',(city: string) => {
+const fillOfferList = createAction('FILL_OFFER_LIST',(city: string) => ({
+  payload: {
+    city,
+  },
+}));
 
-  return {
-    payload: {
-      city:city,
-    },
-  };
+const sortOffers = createAction('SORT_CARDS',(offersCity: OfferType[], currentSortType: string) => {
+  switch (currentSortType) {
+    case SortType.Popular:
+      return {
+        payload: {
+          offersCity: offersCity,
+          currentSortType:currentSortType,
+        },
+      };
+    case SortType.PriceLowToHigh:
+      return {
+        payload: {
+          offersCity: [...offersCity].sort((offerA, offerB) => offerA.price - offerB.price),
+          currentSortType:currentSortType,
+        },
+      };
+    case SortType.PriceHighToLow:
+      return {
+        payload: {
+          offersCity: [...offersCity].sort((offerA, offerB) => offerB.price - offerA.price),
+          currentSortType:currentSortType,
+        },
+      };
+    case SortType.TopRatedFirst:
+      return {
+        payload: {
+          offersCity: [...offersCity].sort((offerA, offerB) => offerB.rating - offerA.rating),
+          currentSortType:currentSortType,
+        },
+      };
+
+    default:
+      return {
+        payload: {
+          offersCity: offersCity,
+          currentSortType:currentSortType,
+        },
+      };
+  }
 });
-// const sortCards = createAction('SORT_CARDS',)
-export {changeCity, fillOfferList};
+
+export {changeCity, fillOfferList, sortOffers};

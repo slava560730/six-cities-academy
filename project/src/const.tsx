@@ -32,4 +32,11 @@ const defaultCity: City = {
   locationZoom: 10,
 };
 
-export {defaultCity, CITIES};
+enum SortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}
+
+export {defaultCity, CITIES, SortType};

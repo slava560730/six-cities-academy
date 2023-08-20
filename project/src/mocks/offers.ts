@@ -11,9 +11,9 @@ const offers: OfferType[] = [
       },
     images: [
       {
-      imageSrc: 'img/apartment-01.jpg',
-      imageAlt: 'description',
-      id: 1,
+        imageSrc: 'img/apartment-02.jpg',
+        imageAlt: 'description',
+        id: 1,
       },
       {
         imageSrc: 'img/apartment-02.jpg',
@@ -57,7 +57,7 @@ const offers: OfferType[] = [
   {
     city:
       {
-        cityName: 'Hamburg',
+        cityName: 'Paris',
         locationLat: 52.3609553943508,
         locationLong: 4.85309666406198,
         locationZoom: 10,
@@ -69,7 +69,7 @@ const offers: OfferType[] = [
         id: 1,
       },
       {
-        imageSrc: 'img/apartment-01.jpg',
+        imageSrc: 'img/apartment-03.jpg',
         imageAlt: 'description',
         id: 2,
       },
@@ -110,14 +110,14 @@ const offers: OfferType[] = [
   {
     city:
       {
-        cityName: 'Amsterdam',
+        cityName: 'Paris',
         locationLat: 52.3909553943508,
         locationLong: 4.929309666406198,
         locationZoom: 10,
       },
     images: [
       {
-        imageSrc: 'img/apartment-02.jpg',
+        imageSrc: 'img/apartment-01.jpg',
         imageAlt: 'description',
         id: 3,
       },
@@ -163,19 +163,19 @@ const offers: OfferType[] = [
   {
     city:
       {
-        cityName: 'Cologne',
+        cityName: 'Paris',
         locationLat: 52.3809553943508,
         locationLong: 4.939309666406198,
         locationZoom: 10,
       },
     images: [
       {
-        imageSrc: 'img/apartment-03.jpg',
+        imageSrc: 'img/apartment-02.jpg',
         imageAlt: 'description',
         id: 1,
       },
       {
-        imageSrc: 'img/apartment-01.jpg',
+        imageSrc: 'img/apartment-02.jpg',
         imageAlt: 'description',
         id: 2,
       },

@@ -22,7 +22,6 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
   const params = useParams();
   const numberId = Number(params.id);
   const currentOffer = offersCity.find((offer) => offer.id === numberId) || DefaultOffer;
-
   const nearOffers = offers.filter((offer) => offer.id !== numberId);
 
   return (
@@ -36,13 +35,11 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                {currentOffer.images.map((img) => (
-                  <div className="property__image-wrapper" key = {img}>
-                    <img className="property__image" src={img} alt={descriptiom}/>
-                  </div>
-                ))}
-              </div>
+              {currentOffer.images.map((img) => (
+                <div className="property__image-wrapper" key = {img.id}>
+                  <img className="property__image" src={img.imageSrc} alt={img.imageAlt}/>
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">

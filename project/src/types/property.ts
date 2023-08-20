@@ -42,7 +42,7 @@ type OfferType = {
   rating: number;
   isFavorite: boolean;
   features: FeaturesType;
-  price: number | string;
+  price: number;
   insideItems: string[];
   host: HostType;
   cardSrc: string;
