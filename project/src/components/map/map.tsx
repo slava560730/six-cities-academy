@@ -1,13 +1,11 @@
-import {useRef, useEffect} from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
-import {City, OfferType} from '../../types/property';
+import {useRef, useEffect, useState} from 'react';
+import {Icon, Marker} from 'leaflet';
 import {useMap} from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapProps = {
-  city: City;
-  offers: OfferType[];
   selectedOffer: number | undefined;
   classNameMap: string;
 };
@@ -25,15 +23,22 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, offers, selectedOffer, classNameMap} = props;
-
+  const {selectedOffer, classNameMap} = props;
+  const offersCity = useAppSelector((state) => state.offerCity);
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef);
+
+  const newMarkers: Marker[] = [];
+  const [markers, setMarkers] = useState(newMarkers);
 
   useEffect(() => {
+
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
+      markers.forEach((marker) => {
+        marker.remove();
+      });
+
+      offersCity.forEach((offer) => {
         const marker = new Marker({
           lat: offer.city.locationLat,
           lng: offer.city.locationLong
@@ -46,12 +51,11 @@ function Map(props: MapProps): JSX.Element {
               : defaultCustomIcon
           )
           .addTo(map);
+        newMarkers.push(marker);
       });
-      return () => {
-        map.removeLayer(markerLayer);
-      };
+      return setMarkers(newMarkers);
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offersCity, selectedOffer]);
 
   return <div className={classNameMap} ref={mapRef}></div>;
 }

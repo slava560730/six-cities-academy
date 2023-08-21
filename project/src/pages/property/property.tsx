@@ -3,19 +3,27 @@ import {AddFormReview} from '../../components/add-form-review/add-form-review';
 import {Helmet} from 'react-helmet-async';
 import {ReviewsType} from '../../types/property';
 import {Map} from '../../components/map/map';
-import {city, classNamesMap} from '../../const';
-import {OfferType} from '../../types/property';
+import {classNamesMap} from '../../const';
+import { offers} from '../../mocks/offers';
 import { useState } from 'react';
 import {Card} from '../../components/card/card';
+import { useAppSelector } from '../../hooks';
+import { useParams } from 'react-router-dom';
 
-type PropetyPageProps = {
+type PropertyPageProps = {
   reviews: ReviewsType[];
-  offers: OfferType[];
 }
 
-function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
-  const nearOffers = offers.filter((offer) => offer.id);
+function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
+  const DefaultOffer = offers[0];
+
   const [selectedOffer, setSelectedOffer] = useState(500);
+  const offersCity = useAppSelector((state) => state.offerCity);
+  const params = useParams();
+  const numberId = Number(params.id);
+  const currentOffer = offersCity.find((offer) => offer.id === numberId) || DefaultOffer;
+  const nearOffers = offers.filter((offer) => offer.id !== numberId);
+
   return (
     <div className="page">
       <Helmet>
@@ -27,24 +35,11 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
+              {currentOffer.images.map((img) => (
+                <div className="property__image-wrapper" key = {img.id}>
+                  <img className="property__image" src={img.imageSrc} alt={img.imageAlt}/>
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">
@@ -54,7 +49,7 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -68,77 +63,49 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
                   <span style={{ width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {currentOffer.features.entire}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {currentOffer.features.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {currentOffer.features.adults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{currentOffer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {currentOffer.insideItems.map((insideItem) => (
+                    <li className="property__inside-item" key = {insideItem}>
+                      {insideItem}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={currentOffer.host.hostSrc} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {currentOffer.host.hostName}
                   </span>
                   <span className="property__user-status">
-                    Pro
+                    {(currentOffer.host.hostStatus) && 'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {currentOffer.host.hostDescription}
                   </p>
                 </div>
               </div>
@@ -146,7 +113,7 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={offers} selectedOffer={selectedOffer} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={selectedOffer} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">
@@ -164,4 +131,4 @@ function PropetyPage ({offers, reviews}: PropetyPageProps): JSX.Element {
   );
 }
 
-export {PropetyPage};
+export {PropertyPage};

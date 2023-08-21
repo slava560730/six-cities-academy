@@ -13,13 +13,6 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const city: City = {
-  cityName: 'Amsterdam',
-  locationLat: 52.3909553943508,
-  locationLong:4.85309666406198,
-  locationZoom: 10,
-};
-
 const URL_MARKER_DEFAULT = '../../img/pin.svg';
 const URL_MARKER_CURRENT = '../../img/pin-active.svg';
 
@@ -30,4 +23,20 @@ enum classNamesMap {
 
 export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, classNamesMap};
 
-export {city};
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+const defaultCity: City = {
+  cityName: 'Paris',
+  locationLat: 52.3909553943508,
+  locationLong: 4.85309666406198,
+  locationZoom: 10,
+};
+
+enum SortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}
+
+export {defaultCity, CITIES, SortType};

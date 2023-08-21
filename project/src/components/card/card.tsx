@@ -12,6 +12,12 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
       onMouseOver={() => {
         setSelectedOffer(offer.id);
       }}
+      onMouseLeave={() => {
+        setSelectedOffer(500);
+      }}
+      onClick={() =>{
+        window.scrollTo(0,0);
+      }}
       className="cities__card place-card"
     >
       <div className="place-card__mark">

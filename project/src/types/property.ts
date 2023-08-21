@@ -16,28 +16,38 @@ type NearCard = {
 
 type FeaturesType = {
   entire: string;
-  bedrooms: number | string;
-  adults: number | string;
+  bedrooms: number;
+  adults: number;
+};
+
+type HostType = {
+  hostId: number;
+  hostSrc: string;
+  hostName: string;
+  hostStatus: boolean;
+  hostDescription: string;
+};
+
+type ImagesType = {
+  imageSrc: string;
+  imageAlt: string;
+  id: number;
 };
 
 type OfferType = {
   city: City;
-  imageSrc: string[];
+  images: ImagesType[];
   mark: string;
   title: string;
   rating: number;
   isFavorite: boolean;
   features: FeaturesType;
-  price: number | string;
-  insideItem: string[];
-  hostId: number;
-  hostSrc: string;
-  hostName: string;
-  hostStatus: string;
-  hostDescription: string;
+  price: number;
+  insideItems: string[];
+  host: HostType;
   cardSrc: string;
   id: number;
-  nearcard: NearCard;
+  nearCard: NearCard;
 };
 
 type ReviewsType = {
