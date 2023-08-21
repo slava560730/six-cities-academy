@@ -15,13 +15,13 @@ type PropertyPageProps = {
 }
 
 function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
-  const DefaultOffer = offers[0];
+  const defaultOffer = useAppSelector((state) => state.offers[0]);
 
   const [selectedOffer, setSelectedOffer] = useState(500);
   const offersCity = useAppSelector((state) => state.offerCity);
   const params = useParams();
   const numberId = Number(params.id);
-  const currentOffer = offersCity.find((offer) => offer.id === numberId) || DefaultOffer;
+  const currentOffer = offersCity.find((offer) => offer.id === numberId) || defaultOffer;
   const nearOffers = offers.filter((offer) => offer.id !== numberId);
 
   return (

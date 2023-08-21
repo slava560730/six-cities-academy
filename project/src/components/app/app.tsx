@@ -8,6 +8,7 @@ import {PropertyPage} from '../../pages/property/property';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType, ReviewsType} from '../../types/property';
+import { useAppSelector } from '../../hooks';
 
 type AppProps = {
   offers: OfferType[];
@@ -15,6 +16,8 @@ type AppProps = {
 };
 
 function App({offers, reviews}: AppProps): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
   return (
     <HelmetProvider>
       <BrowserRouter>

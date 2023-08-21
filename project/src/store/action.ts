@@ -54,4 +54,8 @@ const sortOffers = createAction('SORT_CARDS',(offersCity: OfferType[], currentSo
   }
 });
 
-export {changeCity, fillOfferList, sortOffers};
+const loadOffers = createAction<OfferType[]>('LOAD_OFFERS');
+
+const setOffersDataLoadingStatus = createAction<boolean>('DATA_LOADING_STATUS');
+
+export {changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus};

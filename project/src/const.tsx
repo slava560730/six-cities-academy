@@ -25,7 +25,7 @@ export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, c
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-const defaultCity: City = {
+const DEFAULT_CITY: City = {
   cityName: 'Paris',
   locationLat: 52.3909553943508,
   locationLong: 4.85309666406198,
@@ -39,4 +39,10 @@ enum SortType {
   TopRatedFirst = 'Top rated first',
 }
 
-export {defaultCity, CITIES, SortType};
+enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export {DEFAULT_CITY, CITIES, SortType, APIRoute};

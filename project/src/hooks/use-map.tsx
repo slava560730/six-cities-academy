@@ -2,14 +2,14 @@ import {useEffect, useState, MutableRefObject, useRef} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import {City} from '../types/property';
 import {useAppSelector} from './index';
-import {defaultCity} from '../const';
+import {DEFAULT_CITY} from '../const';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
   const city = useAppSelector((state) => state.city);
   const offersCity = useAppSelector((state) => state.offerCity);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
-  const currentCity: City = offersCity.find((offer) => offer.city.cityName === city)?.city || defaultCity;
+  const currentCity: City = offersCity.find((offer) => offer.city.cityName === city)?.city || DEFAULT_CITY;
 
   const locationLat = currentCity.locationLat;
   const locationLong = currentCity.locationLong;
