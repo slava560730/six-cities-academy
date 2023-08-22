@@ -23,6 +23,7 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
   const numberId = Number(params.id);
   const currentOffer = offersCity.find((offer) => offer.id === numberId) || defaultOffer;
   const nearOffers = offersCity.filter((offer) => offer.id !== numberId);
+  const nearOffersCorrect = nearOffers.slice(0, 3);
 
   return (
     <div className="page">
@@ -120,7 +121,7 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearOffers.map((offer) => (
+              {nearOffersCorrect.map((offer) => (
                 <Card offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
               ))}
             </div>

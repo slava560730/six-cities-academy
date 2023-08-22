@@ -1,6 +1,6 @@
 import {MainPage} from '../../pages/main/main-page';
 import {HelmetProvider} from 'react-helmet-async';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {FavoritesPage} from '../../pages/favorites/favorites-page';
 import {LoginPage} from '../../pages/login/login-page';
@@ -9,6 +9,9 @@ import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {OfferType, ReviewsType} from '../../types/property';
 import { useAppSelector } from '../../hooks';
+import { LoadingScreen } from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-router';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   offers: OfferType[];
@@ -17,10 +20,15 @@ type AppProps = {
 
 function App({offers, reviews}: AppProps): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -44,7 +52,7 @@ function App({offers, reviews}: AppProps): JSX.Element {
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
