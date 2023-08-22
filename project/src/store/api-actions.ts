@@ -13,9 +13,9 @@ const fetchOffersAction = createAsyncThunk<void, undefined, {
   'FETCH_OFFERS',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<OfferType>(APIRoute.Offers);
+    const {data} = await api.get<OfferType[]>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadOffers([data]));
+    dispatch(loadOffers(data));
   },
 );
 

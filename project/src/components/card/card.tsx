@@ -25,7 +25,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={offer.cardSrc} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -55,7 +55,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.features.entire}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
   offerCity: [],
   offers: [],
   currentSortType: SortType.Popular,
-  isOffersDataLoading: false,
+  isOffersDataLoading: true,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,7 +28,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload.city;
     })
     .addCase(fillOfferList, (state, action) => {
-      state.offerCity = state.offers.filter((offer) => offer.city.cityName === action.payload.city);
+      state.offerCity = action.payload.offersCity;
     })
     .addCase(sortOffers, (state, action) => {
       state.offerCity = action.payload.offersCity;

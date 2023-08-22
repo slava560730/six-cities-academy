@@ -4,13 +4,17 @@ import { fillOfferList } from '../../store/action';
 import {CITIES} from '../../const';
 import {CityItem} from '../city-item/city-item';
 
-function CityList(): JSX.Element {
+type CityListProps = {
+  selectedCity: string;
+};
+
+function CityList({ selectedCity }: CityListProps): JSX.Element {
+  const { offers } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const selectedCity = useAppSelector((state) => state.city);
 
   useEffect(() => {
-    dispatch(fillOfferList(selectedCity));
-  }, [selectedCity]);
+    dispatch(fillOfferList(offers, selectedCity));
+  }, [selectedCity, offers,]);
 
   return (
     <ul className="locations__list tabs__list">

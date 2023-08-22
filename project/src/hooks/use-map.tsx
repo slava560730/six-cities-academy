@@ -9,11 +9,11 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
   const offersCity = useAppSelector((state) => state.offerCity);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
-  const currentCity: City = offersCity.find((offer) => offer.city.cityName === city)?.city || DEFAULT_CITY;
+  const currentCity: City = offersCity.find((offer) => offer.city.name === city)?.city || DEFAULT_CITY;
 
-  const locationLat = currentCity.locationLat;
-  const locationLong = currentCity.locationLong;
-  const zoom = currentCity.locationZoom;
+  const locationLat = currentCity.location.latitude;
+  const locationLong = currentCity.location.longitude;
+  const zoom = currentCity.location.zoom;
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {

@@ -28,33 +28,37 @@ function Map(props: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
-  const newMarkers: Marker[] = [];
-  const [markers, setMarkers] = useState(newMarkers);
+  // const newMarkers: Marker[] = [];
+  const [markers, setMarkers] = useState<Marker[]>([]);
 
   useEffect(() => {
 
+    const newMarkers: Marker[] = [];
     if (map) {
-      markers.forEach((marker) => {
+    //   markers.forEach((marker) => {
+    //     marker.remove();
+    //   });
+
+    offersCity.forEach((offer) => {
+      const marker = new Marker({
+        lat: offer.city.location.latitude,
+        lng: offer.city.location.longitude
+      });
+
+      marker
+        .setIcon(
+          selectedOffer !== undefined && offer.id === selectedOffer
+            ? currentCustomIcon
+            : defaultCustomIcon
+        )
+        .addTo(map);
+      newMarkers.push(marker);
+    });
+    setMarkers(newMarkers);
+  }
+      return markers.forEach((marker) => {
         marker.remove();
-      });
-
-      offersCity.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.city.locationLat,
-          lng: offer.city.locationLong
-        });
-
-        marker
-          .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(map);
-        newMarkers.push(marker);
-      });
-      return setMarkers(newMarkers);
-    }
+    });
   }, [map, offersCity, selectedOffer]);
 
   return <div className={classNameMap} ref={mapRef}></div>;

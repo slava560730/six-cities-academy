@@ -20,7 +20,7 @@ function MainPage (): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityList/>
+            <CityList selectedCity={city}/>
           </section>
         </div>
         <div className="cities">

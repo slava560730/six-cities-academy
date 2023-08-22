@@ -1,17 +1,10 @@
 type City = {
-  cityName: string;
-  locationLat: number;
-  locationLong: number;
-  locationZoom: number;
-};
-
-type NearCard = {
-  src: string;
-  price: number;
-  isFavorite: boolean;
-  title: string;
-  features: string;
-  id: number;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  },
+  name: string;
 };
 
 type FeaturesType = {
@@ -35,19 +28,25 @@ type ImagesType = {
 };
 
 type OfferType = {
+  bedrooms: number;
   city: City;
-  images: ImagesType[];
-  mark: string;
+  images: string[];
+  description: string;
   title: string;
+  previewImage: string;
   rating: number;
   isFavorite: boolean;
-  features: FeaturesType;
+  goods: string[];
+  maxAdults: number;
   price: number;
-  insideItems: string[];
-  host: HostType;
-  cardSrc: string;
+  host: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
+  type: string;
   id: number;
-  nearCard: NearCard;
 };
 
 type ReviewsType = {

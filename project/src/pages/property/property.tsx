@@ -4,7 +4,7 @@ import {Helmet} from 'react-helmet-async';
 import {ReviewsType} from '../../types/property';
 import {Map} from '../../components/map/map';
 import {classNamesMap} from '../../const';
-import { offers} from '../../mocks/offers';
+// import { offers} from '../../mocks/offers';
 import { useState } from 'react';
 import {Card} from '../../components/card/card';
 import { useAppSelector } from '../../hooks';
@@ -22,7 +22,7 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
   const params = useParams();
   const numberId = Number(params.id);
   const currentOffer = offersCity.find((offer) => offer.id === numberId) || defaultOffer;
-  const nearOffers = offers.filter((offer) => offer.id !== numberId);
+  const nearOffers = offersCity.filter((offer) => offer.id !== numberId);
 
   return (
     <div className="page">
@@ -36,8 +36,8 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {currentOffer.images.map((img) => (
-                <div className="property__image-wrapper" key = {img.id}>
-                  <img className="property__image" src={img.imageSrc} alt={img.imageAlt}/>
+                <div className="property__image-wrapper" key = {img}>
+                  <img className="property__image" src={img} alt={'desk'}/>
                 </div>
               ))}
             </div>
@@ -67,13 +67,13 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {currentOffer.features.entire}
+                  {currentOffer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {currentOffer.features.bedrooms} Bedrooms
+                  {currentOffer.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {currentOffer.features.adults} adults
+                  Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -83,9 +83,9 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {currentOffer.insideItems.map((insideItem) => (
-                    <li className="property__inside-item" key = {insideItem}>
-                      {insideItem}
+                  {currentOffer.goods.map((good) => (
+                    <li className="property__inside-item" key = {good}>
+                      {good}
                     </li>
                   ))}
                 </ul>
@@ -94,18 +94,18 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={currentOffer.host.hostSrc} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    {currentOffer.host.hostName}
+                    {currentOffer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {(currentOffer.host.hostStatus) && 'Pro'}
+                    {(currentOffer.host.isPro) && 'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {currentOffer.host.hostDescription}
+                    {currentOffer.description}
                   </p>
                 </div>
               </div>

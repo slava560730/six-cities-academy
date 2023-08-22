@@ -26,10 +26,12 @@ export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, c
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 const DEFAULT_CITY: City = {
-  cityName: 'Paris',
-  locationLat: 52.3909553943508,
-  locationLong: 4.85309666406198,
-  locationZoom: 10,
+  location: {
+    latitude: 52.3909553943508,
+    longitude: 4.85309666406198,
+    zoom: 10,
+  },
+  name: 'Paris',
 };
 
 enum SortType {
@@ -40,7 +42,7 @@ enum SortType {
 }
 
 enum APIRoute {
-  Offers = '/offers',
+  Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
 }
