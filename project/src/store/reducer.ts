@@ -7,10 +7,13 @@ import {
   loadOffers,
   setOffersDataLoadingStatus,
   requireAuthorization,
-  loadUserInfo
+  loadUserInfo,
+  loadCurrentOffer,
+  setOfferDataLoadingStatus,
+  loadNearbyOffers,
+  setFormActiveState,
 } from './action';
 import { OfferType, ReviewsType } from '../types/property';
-// import {offers} from '../mocks/offers';
 import {SortType, AuthorizationStatus} from '../const';
 
 const INITIAL_CITY = 'Paris';
@@ -26,6 +29,10 @@ type InitialStateType = {
   error: string | null;
   userEmail: string;
   avatarUrl: string;
+  currentOffer?: OfferType | undefined;
+  nearbyOffers : OfferType[];
+  isOfferDataLoading: boolean;
+  formActiveState: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -34,11 +41,15 @@ const initialState: InitialStateType = {
   offers: [],
   reviews: [],
   currentSortType: SortType.Popular,
-  isOffersDataLoading: true,
+  isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   userEmail: '',
   avatarUrl: '../img/avatar.svg',
+  currentOffer: undefined,
+  nearbyOffers : [],
+  isOfferDataLoading: false,
+  formActiveState: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -59,6 +70,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     })
+    .addCase(setOfferDataLoadingStatus, (state, action) => {
+      state.isOfferDataLoading = action.payload.isOfferDataLoading;
+    })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
@@ -68,6 +82,15 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadUserInfo, (state, action) =>{
       state.userEmail = action.payload.userEmail;
       state.avatarUrl = action.payload.avatarUrl;
+    })
+    .addCase(loadCurrentOffer, (state, action) =>{
+      state.currentOffer = action.payload.currentOffer;
+    })
+    .addCase(loadNearbyOffers, (state, action) =>{
+      state.nearbyOffers = action.payload.nearbyOffers;
+    })
+    .addCase(setFormActiveState, (state, action) =>{
+      state.formActiveState = action.payload.formActiveState;
     });
 });
 

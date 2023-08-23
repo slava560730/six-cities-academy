@@ -5,24 +5,23 @@ import {useAppSelector} from './index';
 import {DEFAULT_CITY} from '../const';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
-  const city = useAppSelector((state) => state.city);
-  const offersCity = useAppSelector((state) => state.offerCity);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const city = useAppSelector((state) => state.city);
+  const offersCity = useAppSelector((state) => state.offerCity);
   const currentCity: City = offersCity.find((offer) => offer.city.name === city)?.city || DEFAULT_CITY;
 
-  const locationLat = currentCity.location.latitude;
-  const locationLong = currentCity.location.longitude;
-  const zoom = currentCity.location.zoom;
+  const { latitude, longitude, zoom } = currentCity.location;
+
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: locationLat,
-          lng: locationLong
+          lat: latitude,
+          lng: longitude
         },
-        zoom: zoom
+        zoom,
       });
 
       const layer = new TileLayer(
@@ -38,7 +37,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
       setMap(instance);
       isRenderedRef.current = true;
     }
-    map?.setView([locationLat, locationLong], zoom);
+    map?.setView([latitude, longitude], zoom);
   }, [mapRef, map, city, currentCity]);
 
   return map;

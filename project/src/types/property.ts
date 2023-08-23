@@ -3,28 +3,8 @@ type City = {
     latitude: number;
     longitude: number;
     zoom: number;
-  },
+  };
   name: string;
-};
-
-type FeaturesType = {
-  entire: string;
-  bedrooms: number;
-  adults: number;
-};
-
-type HostType = {
-  hostId: number;
-  hostSrc: string;
-  hostName: string;
-  hostStatus: boolean;
-  hostDescription: string;
-};
-
-type ImagesType = {
-  imageSrc: string;
-  imageAlt: string;
-  id: number;
 };
 
 type OfferType = {
@@ -37,6 +17,11 @@ type OfferType = {
   rating: number;
   isFavorite: boolean;
   isPremium: boolean;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
   goods: string[];
   maxAdults: number;
   price: number;
@@ -63,4 +48,9 @@ type ReviewsType = {
   rating: number;
 };
 
-export type {OfferType, ReviewsType, City};
+type NewReview = {
+  comment: string;
+  rating: number;
+};
+
+export type {NewReview, OfferType, ReviewsType, City};

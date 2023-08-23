@@ -8,24 +8,31 @@ import {Card} from '../../components/card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
-import {fetchReviewsAction} from '../../store/api-actions';
+import {fetchNearbyOffersAction, fetchReviewsAction, fetchCurrentOfferAction} from '../../store/api-actions';
+import { NotFoundPage } from '../not-found/not-found-page';
 
 function PropertyPage (): JSX.Element {
-  const defaultOffer = useAppSelector((state) => state.offers[0]);
+  // const defaultOffer = useAppSelector((state) => state.offers[0]);
   const dispatch = useAppDispatch();
 
   const [selectedOffer, setSelectedOffer] = useState(500);
   const offersCity = useAppSelector((state) => state.offerCity);
   const params = useParams();
   const numberId = Number(params.id);
-  const currentOffer = offersCity.find((offer) => offer.id === numberId) || defaultOffer;
-  const nearOffers = offersCity.filter((offer) => offer.id !== numberId);
+  const nearOffers = useAppSelector((state) => state.nearbyOffers);
   const nearOffersCorrect = nearOffers.slice(0, 3);
   const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const currentOffer = useAppSelector((state) => state.currentOffer);
 
   useEffect(() => {
     dispatch(fetchReviewsAction(numberId));
+    dispatch(fetchCurrentOfferAction(numberId));
+    dispatch(fetchNearbyOffersAction(numberId));
   }, [numberId]);
+
+  if (!currentOffer) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="page">

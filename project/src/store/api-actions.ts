@@ -1,8 +1,8 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { OfferType, ReviewsType } from '../types/property';
-import {loadReviews, redirectToRoute, loadOffers, setOffersDataLoadingStatus, requireAuthorization, loadUserInfo } from './action';
+import { OfferType, ReviewsType, NewReview } from '../types/property';
+import {setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadOffers, setOffersDataLoadingStatus, requireAuthorization, loadUserInfo, loadNearbyOffers } from './action';
 import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -32,6 +32,19 @@ const fetchReviewsAction = createAsyncThunk<
   }
 >('FETCH_REVIEWS', async (id, { dispatch, extra: api }) => {
   const { data } = await api.get<ReviewsType[]>(`${APIRoute.Reviews}${id}`);
+  dispatch(loadReviews(data));
+});
+
+const fetchPostReviewAction = createAsyncThunk<
+  void,
+  [NewReview, number],
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_POST_REVIEW', async ([{ comment, rating }, id], { dispatch, extra: api }) => {
+  const { data } = await api.post<ReviewsType[]>(`${APIRoute.Reviews}${id}`, { comment, rating });
   dispatch(loadReviews(data));
 });
 
@@ -85,4 +98,32 @@ const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export {fetchReviewsAction, fetchOffersAction, checkAuthAction, loginAction, logoutAction};
+const fetchCurrentOfferAction = createAsyncThunk<
+  void,
+  number,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_CURRENT_OFFER', async (id, { dispatch, extra: api }) => {
+  dispatch(setOfferDataLoadingStatus(true));
+  const { data } = await api.get<OfferType>(`${APIRoute.Offers}${id}`);
+  dispatch(setOfferDataLoadingStatus(false));
+  dispatch(loadCurrentOffer(data));
+});
+
+const fetchNearbyOffersAction = createAsyncThunk<
+  void,
+  number,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_NEARBY_OFFERS', async (id, { dispatch, extra: api }) => {
+  const { data } = await api.get<OfferType[]>(`${APIRoute.Offers}${id}${APIRoute.Nearby}`);
+  dispatch(loadNearbyOffers(data));
+});
+
+export {fetchPostReviewAction, fetchNearbyOffersAction, fetchCurrentOfferAction, fetchReviewsAction, fetchOffersAction, checkAuthAction, loginAction, logoutAction};

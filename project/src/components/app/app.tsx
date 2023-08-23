@@ -7,7 +7,7 @@ import {LoginPage} from '../../pages/login/login-page';
 import {PropertyPage} from '../../pages/property/property';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {OfferType, ReviewsType} from '../../types/property';
+import {OfferType} from '../../types/property';
 import { useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-router';

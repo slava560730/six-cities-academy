@@ -42,10 +42,11 @@ enum SortType {
 }
 
 enum APIRoute {
-  Offers = '/hotels',
+  Offers = '/hotels/',
   Login = '/login',
   Logout = '/logout',
   Reviews = '/comments/',
+  Nearby = '/nearby'
 }
 
 const MAX_REVIEW_LENGTH = 300;

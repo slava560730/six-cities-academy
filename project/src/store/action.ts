@@ -82,6 +82,28 @@ const setOffersDataLoadingStatus = createAction<boolean>('DATA_LOADING_STATUS');
 
 const requireAuthorization = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
 
-// const setError = createAction<string | null>('SET_ERROR');
+const loadCurrentOffer = createAction('LOAD_CURRENT_OFFER', (currentOffer: OfferType) => ({
+  payload: {
+    currentOffer,
+  },
+}));
 
-export {loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};
+const loadNearbyOffers = createAction('LOAD_NEARBY_OFFERS', (nearbyOffers: OfferType[]) => ({
+  payload: {
+    nearbyOffers,
+  },
+}));
+
+const setOfferDataLoadingStatus = createAction('SET_OFFER_DATA_LOADING_STATUS', (isOfferDataLoading: boolean) => ({
+  payload: {
+    isOfferDataLoading: isOfferDataLoading,
+  },
+}));
+
+const setFormActiveState = createAction('SET_FORM_ACTIVE_STATE', (formActiveState: boolean) => ({
+  payload: {
+    formActiveState,
+  },
+}));
+
+export {setFormActiveState, loadNearbyOffers, setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};

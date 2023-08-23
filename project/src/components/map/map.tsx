@@ -7,7 +7,7 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {OfferType} from '../../types/property';
 
 type MapProps = {
-  selectedOffer: number | undefined;
+  selectedOffer: number | null;
   classNameMap: string;
   offers: OfferType[];
 };
@@ -24,9 +24,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): JSX.Element {
-  const {selectedOffer, classNameMap, offers} = props;
-  // const offersCity = useAppSelector((state) => state.offerCity);
+function Map({selectedOffer, classNameMap, offers}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
@@ -35,14 +33,14 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     const newMarkers: Marker[] = [];
     if (map) {
-      offers.forEach((offer) => {
+      offers.forEach(({ location: { latitude, longitude }, id }) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude
+          lat: latitude,
+          lng: longitude
         });
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer
+            selectedOffer !== undefined && id === selectedOffer
               ? currentCustomIcon
               : defaultCustomIcon
           )
