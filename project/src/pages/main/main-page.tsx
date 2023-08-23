@@ -35,7 +35,7 @@ function MainPage (): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map selectedOffer={selectedOffer} classNameMap={classNamesMap.Main}></Map>
+                <Map selectedOffer={selectedOffer} offers={offersCity} classNameMap={classNamesMap.Main}></Map>
               </section>
             </div>
           </div>

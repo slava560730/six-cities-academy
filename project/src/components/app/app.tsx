@@ -15,10 +15,9 @@ import browserHistory from '../../browser-history';
 
 type AppProps = {
   offers: OfferType[];
-  reviews: ReviewsType[];
 };
 
-function App({offers, reviews}: AppProps): JSX.Element {
+function App({offers}: AppProps): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   if (isOffersDataLoading) {
     return (
@@ -40,7 +39,7 @@ function App({offers, reviews}: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<PropertyPage reviews={reviews} />}
+            element={<PropertyPage />}
           />
           <Route
             path={AppRoute.Favorites}

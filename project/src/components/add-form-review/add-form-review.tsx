@@ -1,12 +1,10 @@
 import {ReviewsType} from '../../types/property';
 import { AddReviewsList } from '../reviews-list/reviews-list';
 import {useState} from 'react';
+import {useAppSelector} from "../../hooks";
 
-type AddFormReviewProps = {
-  reviews: ReviewsType[];
-};
-
-function AddFormReview ({reviews}: AddFormReviewProps): JSX.Element{
+function AddFormReview (): JSX.Element{
+  const reviews = useAppSelector((store) => store.reviews);
   const [formData, setFormData] = useState({
     comment: '',
     rating: 0,
@@ -22,7 +20,7 @@ function AddFormReview ({reviews}: AddFormReviewProps): JSX.Element{
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-      <AddReviewsList reviews={reviews}/>
+      <AddReviewsList />
       <form className="reviews__form form" action="#" method="post">
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">

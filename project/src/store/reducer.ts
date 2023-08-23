@@ -1,6 +1,15 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization } from './action';
-import { OfferType } from '../types/property';
+import {
+  loadReviews,
+  changeCity,
+  fillOfferList,
+  sortOffers,
+  loadOffers,
+  setOffersDataLoadingStatus,
+  requireAuthorization,
+  loadUserInfo
+} from './action';
+import { OfferType, ReviewsType } from '../types/property';
 // import {offers} from '../mocks/offers';
 import {SortType, AuthorizationStatus} from '../const';
 
@@ -10,22 +19,26 @@ type InitialStateType = {
   city: string;
   offerCity: OfferType[];
   offers: OfferType[];
+  reviews: ReviewsType[];
   currentSortType: string;
   isOffersDataLoading: boolean;
   authorizationStatus: string;
   error: string | null;
-  userInfo: string;
+  userEmail: string;
+  avatarUrl: string;
 };
 
 const initialState: InitialStateType = {
   city: INITIAL_CITY,
   offerCity: [],
   offers: [],
+  reviews: [],
   currentSortType: SortType.Popular,
   isOffersDataLoading: true,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  userInfo: '',
+  userEmail: '',
+  avatarUrl: '../img/avatar.svg',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -48,6 +61,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadReviews, (state, action) =>{
+      state.reviews = action.payload.reviews;
+    })
+    .addCase(loadUserInfo, (state, action) =>{
+      state.userEmail = action.payload.userEmail;
+      state.avatarUrl = action.payload.avatarUrl;
     });
 });
 

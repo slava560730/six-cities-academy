@@ -36,6 +36,7 @@ type OfferType = {
   previewImage: string;
   rating: number;
   isFavorite: boolean;
+  isPremium: boolean;
   goods: string[];
   maxAdults: number;
   price: number;
@@ -50,8 +51,12 @@ type OfferType = {
 };
 
 type ReviewsType = {
-  src: string;
-  userName: string;
+  user: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
   comment: string;
   date: string;
   id: number;

@@ -45,6 +45,10 @@ enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Reviews = '/comments/',
 }
 
-export {DEFAULT_CITY, CITIES, SortType, APIRoute};
+const MAX_REVIEW_LENGTH = 300;
+const MIN_REVIEW_LENGTH = 50;
+
+export {DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};

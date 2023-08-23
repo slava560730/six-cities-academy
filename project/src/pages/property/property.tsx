@@ -1,21 +1,18 @@
 import {Header} from '../../components/header/header';
 import {AddFormReview} from '../../components/add-form-review/add-form-review';
 import {Helmet} from 'react-helmet-async';
-import {ReviewsType} from '../../types/property';
 import {Map} from '../../components/map/map';
 import {classNamesMap} from '../../const';
-// import { offers} from '../../mocks/offers';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {Card} from '../../components/card/card';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useParams } from 'react-router-dom';
+import {AuthorizationStatus} from '../../const';
+import {fetchReviewsAction} from '../../store/api-actions';
 
-type PropertyPageProps = {
-  reviews: ReviewsType[];
-}
-
-function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
+function PropertyPage (): JSX.Element {
   const defaultOffer = useAppSelector((state) => state.offers[0]);
+  const dispatch = useAppDispatch();
 
   const [selectedOffer, setSelectedOffer] = useState(500);
   const offersCity = useAppSelector((state) => state.offerCity);
@@ -24,6 +21,11 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
   const currentOffer = offersCity.find((offer) => offer.id === numberId) || defaultOffer;
   const nearOffers = offersCity.filter((offer) => offer.id !== numberId);
   const nearOffersCorrect = nearOffers.slice(0, 3);
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+
+  useEffect(() => {
+    dispatch(fetchReviewsAction(numberId));
+  }, [numberId]);
 
   return (
     <div className="page">
@@ -46,7 +48,7 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
-                <span>Premium</span>
+                <span>{(currentOffer.isPremium) && 'Premium'}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -110,11 +112,11 @@ function PropertyPage ({reviews}: PropertyPageProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <AddFormReview reviews={reviews}/>
+              {authorizationStatus === AuthorizationStatus.Auth && <AddFormReview />}
             </div>
           </div>
           <section className="property__map map">
-            <Map selectedOffer={selectedOffer} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={selectedOffer} offers={offersCity} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">
