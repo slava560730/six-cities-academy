@@ -7,7 +7,7 @@ import { fetchPostReviewAction } from '../../store/api-actions';
 import { MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const';
 
 function AddFormReview (): JSX.Element{
-  const reviews = useAppSelector((store) => store.reviews);
+  const { reviews } = useAppSelector((state) => state);
   const formActiveState = useAppSelector((state) => state.formActiveState);
   const dispatch = useAppDispatch();
   const params = useParams();

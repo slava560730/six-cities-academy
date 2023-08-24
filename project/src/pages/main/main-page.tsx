@@ -6,11 +6,21 @@ import {Map} from '../../components/map/map';
 import {CityList} from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 import {Sort} from '../../components/sort/sort';
+import { MainEmptyPage } from '../main-empty/main-empty';
+import { store } from '../../store';
+import { fetchOffersAction } from '../../store/api-actions';
+
+store.dispatch(fetchOffersAction());
 
 function MainPage (): JSX.Element {
+
   const [selectedOffer, setSelectedOffer] = useState(500);
   const city = useAppSelector((state) => state.city);
   const offersCity = useAppSelector((state) => state.offerCity);
+
+  if (offersCity.length === 0) {
+    return <MainEmptyPage />;
+  }
 
   return (
     <div className="page page--gray page--main">
