@@ -106,4 +106,10 @@ const setFormActiveState = createAction('SET_FORM_ACTIVE_STATE', (formActiveStat
   },
 }));
 
-export {setFormActiveState, loadNearbyOffers, setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};
+const setFavoriteStatus = createAction('SET_OFFER_FAVORITE_STATUS', (isFavoriteStatus: boolean) => ({
+  payload: {
+    isFavoriteStatus: isFavoriteStatus,
+  },
+}));
+
+export {setFavoriteStatus, setFormActiveState, loadNearbyOffers, setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};

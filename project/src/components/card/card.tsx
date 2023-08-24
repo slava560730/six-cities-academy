@@ -1,5 +1,11 @@
 import {OfferType} from '../../types/property';
 import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
+import { fetchPostFavoriteStateAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
 
 type CardProps = {
   offer: OfferType;
@@ -7,6 +13,21 @@ type CardProps = {
 };
 
 function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const handleFavoiteButtonClick = () => {
+
+    if (authStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    }
+    dispatch(fetchPostFavoriteStateAction([
+      offer.isFavorite ? '0' : '1',
+      offer.id,
+    ]));
+  };
+
   return (
     <article
       onMouseOver={() => {
@@ -35,9 +56,10 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`${
-              offer.isFavorite ? 'place-card__bookmark-button--active' : ''
-            } place-card__bookmark-button button`}
+            onClick={handleFavoiteButtonClick}
+            className={cn('place-card__bookmark-button button', {
+              'place-card__bookmark-button--active': offer.isFavorite,
+            })}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

@@ -46,7 +46,8 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Reviews = '/comments/',
-  Nearby = '/nearby'
+  Nearby = '/nearby',
+  Favorite = '/favorite'
 }
 
 const MAX_REVIEW_LENGTH = 300;

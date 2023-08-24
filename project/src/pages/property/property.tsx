@@ -12,7 +12,6 @@ import {fetchNearbyOffersAction, fetchReviewsAction, fetchCurrentOfferAction} fr
 import { NotFoundPage } from '../not-found/not-found-page';
 
 function PropertyPage (): JSX.Element {
-  // const defaultOffer = useAppSelector((state) => state.offers[0]);
   const dispatch = useAppDispatch();
 
   const [selectedOffer, setSelectedOffer] = useState(500);

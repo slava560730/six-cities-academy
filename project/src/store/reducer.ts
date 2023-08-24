@@ -12,6 +12,7 @@ import {
   setOfferDataLoadingStatus,
   loadNearbyOffers,
   setFormActiveState,
+  setFavoriteStatus,
 } from './action';
 import { OfferType, ReviewsType } from '../types/property';
 import {SortType, AuthorizationStatus} from '../const';
@@ -33,6 +34,7 @@ type InitialStateType = {
   nearbyOffers : OfferType[];
   isOfferDataLoading: boolean;
   formActiveState: boolean;
+  isFavoriteStatus: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -50,6 +52,7 @@ const initialState: InitialStateType = {
   nearbyOffers : [],
   isOfferDataLoading: false,
   formActiveState: false,
+  isFavoriteStatus: true,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -91,6 +94,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFormActiveState, (state, action) =>{
       state.formActiveState = action.payload.formActiveState;
+    })
+    .addCase(setFavoriteStatus, (state, action) => {
+      state.isFavoriteStatus = action.payload.isFavoriteStatus;
     });
 });
 

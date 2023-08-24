@@ -126,4 +126,17 @@ const fetchNearbyOffersAction = createAsyncThunk<
   dispatch(loadNearbyOffers(data));
 });
 
-export {fetchPostReviewAction, fetchNearbyOffersAction, fetchCurrentOfferAction, fetchReviewsAction, fetchOffersAction, checkAuthAction, loginAction, logoutAction};
+const fetchPostFavoriteStateAction = createAsyncThunk<
+  OfferType,
+  [string, number],
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchPostFavoriteState', async ([favoriteState, id], { extra: api }) => {
+  const { data } = await api.post<OfferType>(`${APIRoute.Favorite}${id}/${favoriteState}`);
+  return data;
+});
+
+export {fetchPostFavoriteStateAction, fetchPostReviewAction, fetchNearbyOffersAction, fetchCurrentOfferAction, fetchReviewsAction, fetchOffersAction, checkAuthAction, loginAction, logoutAction};

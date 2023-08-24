@@ -1,11 +1,26 @@
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../types/property';
+import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
+import { setFavoriteStatus } from '../../store/action';
 
 type FavoriteCardProps = {
   offer: OfferType;
 };
 
 function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const handleFavoiteButtonClick = () => {
+    if (!authStatus) {
+      navigate(AppRoute.Login);
+    }
+    dispatch(setFavoriteStatus);
+  };
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -19,7 +34,13 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={cn('place-card__bookmark-button button', {
+              'place-card__bookmark-button--active': offer.isFavorite,
+            })}
+            type="button"
+            onClick={handleFavoiteButtonClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
