@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import {OfferType, ReviewsType} from '../types/property';
-import {SortType, AuthorizationStatus, AppRoute} from '../const';
+import {SortType, AppRoute} from '../const';
 
 const changeCity = createAction('CHANGE_CITY',(city: string) => ({
   payload: {
@@ -70,36 +70,6 @@ const redirectToRoute = createAction('REDIRECT_TO_ROUTE', (toRoute: AppRoute) =>
   payload: toRoute,
 }));
 
-const loadReviews = createAction('LOAD_REVIEWS', (reviews: ReviewsType[]) => ({
-  payload: {
-    reviews: reviews,
-  },
-}));
-
-const loadOffers = createAction<OfferType[]>('LOAD_OFFERS');
-
-const setOffersDataLoadingStatus = createAction<boolean>('DATA_LOADING_STATUS');
-
-const requireAuthorization = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
-
-const loadCurrentOffer = createAction('LOAD_CURRENT_OFFER', (currentOffer: OfferType) => ({
-  payload: {
-    currentOffer,
-  },
-}));
-
-const loadNearbyOffers = createAction('LOAD_NEARBY_OFFERS', (nearbyOffers: OfferType[]) => ({
-  payload: {
-    nearbyOffers,
-  },
-}));
-
-const setOfferDataLoadingStatus = createAction('SET_OFFER_DATA_LOADING_STATUS', (isOfferDataLoading: boolean) => ({
-  payload: {
-    isOfferDataLoading: isOfferDataLoading,
-  },
-}));
-
 const setFormActiveState = createAction('SET_FORM_ACTIVE_STATE', (formActiveState: boolean) => ({
   payload: {
     formActiveState,
@@ -112,4 +82,4 @@ const setFavoriteStatus = createAction('SET_OFFER_FAVORITE_STATUS', (isFavoriteS
   },
 }));
 
-export {setFavoriteStatus, setFormActiveState, loadNearbyOffers, setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};
+export {setFavoriteStatus, setFormActiveState, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers};

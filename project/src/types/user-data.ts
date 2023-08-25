@@ -5,4 +5,9 @@ type UserData = {
   avatarUrl: string;
 };
 
-export type {UserData};
+type UserDataProfile = {
+  email: string;
+  avatarUrl: string;
+};
+
+export type {UserData, UserDataProfile};

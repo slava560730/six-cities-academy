@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
 import { fetchPostFavoriteStateAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../const';
+import { FavoriteState, AuthorizationStatus } from '../../const';
 
 type CardProps = {
   offer: OfferType;
@@ -17,13 +17,13 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const handleFavoiteButtonClick = () => {
+  const handleFavoriteButtonClick = () => {
 
     if (authStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.Login);
     }
     dispatch(fetchPostFavoriteStateAction([
-      offer.isFavorite ? '0' : '1',
+      offer.isFavorite ? FavoriteState.NotFavorite : FavoriteState.Favorite,
       offer.id,
     ]));
   };
@@ -34,7 +34,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         setSelectedOffer(offer.id);
       }}
       onMouseLeave={() => {
-        setSelectedOffer(500);
+        setSelectedOffer(0);
       }}
       onClick={() =>{
         window.scrollTo(0,0);
@@ -56,7 +56,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            onClick={handleFavoiteButtonClick}
+            onClick={handleFavoriteButtonClick}
             className={cn('place-card__bookmark-button button', {
               'place-card__bookmark-button--active': offer.isFavorite,
             })}

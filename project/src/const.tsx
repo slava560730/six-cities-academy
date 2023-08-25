@@ -47,10 +47,23 @@ enum APIRoute {
   Logout = '/logout',
   Reviews = '/comments/',
   Nearby = '/nearby',
-  Favorite = '/favorite'
+  Favorite = '/favorite/',
 }
 
 const MAX_REVIEW_LENGTH = 300;
 const MIN_REVIEW_LENGTH = 50;
 
-export {DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};
+enum FavoriteState {
+  Favorite = '1',
+  NotFavorite = '0',
+}
+
+enum Namespace {
+  User = 'USER',
+  Data = 'DATA',
+  App = 'APP',
+}
+
+const INITIAL_CITY = 'Paris';
+
+export {INITIAL_CITY, Namespace, FavoriteState, DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};
