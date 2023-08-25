@@ -20,11 +20,14 @@ type  AppData = {
   nearbyOffers : OfferType[],
   reviews: ReviewsType[],
   formActiveState: boolean,
+  isFavoriteStatus: boolean,
+  favoriteOffers: OfferType[],
 };
 
 type  AppProcess = {
   city: string,
   currentSortType: string,
+  selectState: boolean;
 };
 
 export type {AppProcess, AppData, State, AppDispatch, UserProcess};

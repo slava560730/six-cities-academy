@@ -66,4 +66,8 @@ enum Namespace {
 
 const INITIAL_CITY = 'Paris';
 
-export {INITIAL_CITY, Namespace, FavoriteState, DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};
+const NULL_CITY_ID = 0;
+
+const SELECT_OPEN = true;
+
+export {SELECT_OPEN, NULL_CITY_ID, INITIAL_CITY, Namespace, FavoriteState, DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};

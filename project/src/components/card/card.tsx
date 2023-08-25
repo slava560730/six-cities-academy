@@ -3,9 +3,10 @@ import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute } from '../../const';
+import { AppRoute, NULL_CITY_ID } from '../../const';
 import { fetchPostFavoriteStateAction } from '../../store/api-actions';
-import { FavoriteState, AuthorizationStatus } from '../../const';
+import { FavoriteState} from '../../const';
+import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 
 type CardProps = {
   offer: OfferType;
@@ -15,11 +16,11 @@ type CardProps = {
 function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthLogged = useAppSelector(getAuthLoggedStatus);
 
   const handleFavoriteButtonClick = () => {
 
-    if (authStatus === AuthorizationStatus.NoAuth) {
+    if (!isAuthLogged) {
       navigate(AppRoute.Login);
     }
     dispatch(fetchPostFavoriteStateAction([
@@ -34,7 +35,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         setSelectedOffer(offer.id);
       }}
       onMouseLeave={() => {
-        setSelectedOffer(0);
+        setSelectedOffer(NULL_CITY_ID);
       }}
       onClick={() =>{
         window.scrollTo(0,0);

@@ -2,7 +2,6 @@ import {useRef, useEffect, useState} from 'react';
 import {Icon, Marker} from 'leaflet';
 import {useMap} from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
-// import { useAppSelector } from '../../hooks';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {OfferType} from '../../types/property';
 

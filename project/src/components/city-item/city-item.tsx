@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/app-process/app-process';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 

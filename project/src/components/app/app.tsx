@@ -7,18 +7,14 @@ import {LoginPage} from '../../pages/login/login-page';
 import {PropertyPage} from '../../pages/property/property';
 import {NotFoundPage} from '../../pages/not-found/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {OfferType} from '../../types/property';
 import { useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-router';
 import browserHistory from '../../browser-history';
+import { getOffersDataLoadingState } from '../../store/app-data/selectors';
 
-type AppProps = {
-  offers: OfferType[];
-};
-
-function App({offers}: AppProps): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingState);
   if (isOffersDataLoading) {
     return (
       <LoadingScreen />
@@ -45,7 +41,7 @@ function App({offers}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoritesPage offers={offers} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
