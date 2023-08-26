@@ -1,8 +1,20 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { changeCity, fillOfferList, sortOffers } from './action';
-import { OfferType } from '../types/property';
-import {offers} from '../mocks/offers';
-import {SortType} from '../const';
+import {
+  loadReviews,
+  changeCity,
+  fillOfferList,
+  sortOffers,
+  loadOffers,
+  setOffersDataLoadingStatus,
+  requireAuthorization,
+  loadUserInfo,
+  loadCurrentOffer,
+  setOfferDataLoadingStatus,
+  loadNearbyOffers,
+  setFormActiveState,
+} from './action';
+import { OfferType, ReviewsType } from '../types/property';
+import {SortType, AuthorizationStatus} from '../const';
 
 const INITIAL_CITY = 'Paris';
 
@@ -10,14 +22,34 @@ type InitialStateType = {
   city: string;
   offerCity: OfferType[];
   offers: OfferType[];
+  reviews: ReviewsType[];
   currentSortType: string;
+  isOffersDataLoading: boolean;
+  authorizationStatus: string;
+  error: string | null;
+  userEmail: string;
+  avatarUrl: string;
+  currentOffer?: OfferType | undefined;
+  nearbyOffers : OfferType[];
+  isOfferDataLoading: boolean;
+  formActiveState: boolean;
 };
 
 const initialState: InitialStateType = {
   city: INITIAL_CITY,
   offerCity: [],
-  offers: offers,
+  offers: [],
+  reviews: [],
   currentSortType: SortType.Popular,
+  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
+  userEmail: '',
+  avatarUrl: '../img/avatar.svg',
+  currentOffer: undefined,
+  nearbyOffers : [],
+  isOfferDataLoading: false,
+  formActiveState: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -26,11 +58,39 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload.city;
     })
     .addCase(fillOfferList, (state, action) => {
-      state.offerCity = state.offers.filter((offer) => offer.city.cityName === action.payload.city);
+      state.offerCity = action.payload.offersCity;
     })
     .addCase(sortOffers, (state, action) => {
       state.offerCity = action.payload.offersCity;
       state.currentSortType = action.payload.currentSortType;
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setOfferDataLoadingStatus, (state, action) => {
+      state.isOfferDataLoading = action.payload.isOfferDataLoading;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(loadReviews, (state, action) =>{
+      state.reviews = action.payload.reviews;
+    })
+    .addCase(loadUserInfo, (state, action) =>{
+      state.userEmail = action.payload.userEmail;
+      state.avatarUrl = action.payload.avatarUrl;
+    })
+    .addCase(loadCurrentOffer, (state, action) =>{
+      state.currentOffer = action.payload.currentOffer;
+    })
+    .addCase(loadNearbyOffers, (state, action) =>{
+      state.nearbyOffers = action.payload.nearbyOffers;
+    })
+    .addCase(setFormActiveState, (state, action) =>{
+      state.formActiveState = action.payload.formActiveState;
     });
 });
 

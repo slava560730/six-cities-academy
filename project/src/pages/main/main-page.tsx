@@ -1,4 +1,4 @@
-import {Header} from '../../components/header/header';
+import { Header } from '../../components/header/header';
 import { classNamesMap } from '../../const';
 import {OfferList} from '../../components/offer-list/offer-list';
 import {useState} from 'react';
@@ -6,21 +6,31 @@ import {Map} from '../../components/map/map';
 import {CityList} from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 import {Sort} from '../../components/sort/sort';
+import { MainEmptyPage } from '../main-empty/main-empty';
+import { store } from '../../store';
+import { fetchOffersAction } from '../../store/api-actions';
+
+store.dispatch(fetchOffersAction());
 
 function MainPage (): JSX.Element {
+
   const [selectedOffer, setSelectedOffer] = useState(500);
   const city = useAppSelector((state) => state.city);
   const offersCity = useAppSelector((state) => state.offerCity);
 
+  if (offersCity.length === 0) {
+    return <MainEmptyPage />;
+  }
+
   return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityList/>
+            <CityList selectedCity={city}/>
           </section>
         </div>
         <div className="cities">
@@ -35,7 +45,7 @@ function MainPage (): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map selectedOffer={selectedOffer} classNameMap={classNamesMap.Main}></Map>
+                <Map selectedOffer={selectedOffer} offers={offersCity} classNameMap={classNamesMap.Main}></Map>
               </section>
             </div>
           </div>

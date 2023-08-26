@@ -15,11 +15,7 @@ function Sort (): JSX.Element {
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}
         onClick={() => {
-          if (isActive === false) {
-            setIsActive(true);
-          } else {
-            setIsActive(false);
-          }
+          setIsActive(!isActive);
         }}
       >
         {currentSortType}

@@ -2,12 +2,14 @@ import {useRef, useEffect, useState} from 'react';
 import {Icon, Marker} from 'leaflet';
 import {useMap} from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
+import {OfferType} from '../../types/property';
 
 type MapProps = {
-  selectedOffer: number | undefined;
+  selectedOffer: number | null;
   classNameMap: string;
+  offers: OfferType[];
 };
 
 const defaultCustomIcon = new Icon({
@@ -22,40 +24,35 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): JSX.Element {
-  const {selectedOffer, classNameMap} = props;
-  const offersCity = useAppSelector((state) => state.offerCity);
+function Map({selectedOffer, classNameMap, offers}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
-  const newMarkers: Marker[] = [];
-  const [markers, setMarkers] = useState(newMarkers);
+  const [markers, setMarkers] = useState<Marker[]>([]);
 
   useEffect(() => {
-
+    const newMarkers: Marker[] = [];
     if (map) {
-      markers.forEach((marker) => {
-        marker.remove();
-      });
-
-      offersCity.forEach((offer) => {
+      offers.forEach(({ location: { latitude, longitude }, id }) => {
         const marker = new Marker({
-          lat: offer.city.locationLat,
-          lng: offer.city.locationLong
+          lat: latitude,
+          lng: longitude
         });
-
         marker
           .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer
+            selectedOffer !== undefined && id === selectedOffer
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
         newMarkers.push(marker);
       });
-      return setMarkers(newMarkers);
+      setMarkers(newMarkers);
     }
-  }, [map, offersCity, selectedOffer]);
+    return markers.forEach((marker) => {
+      marker.remove();
+    });
+  }, [map, offers, selectedOffer]);
 
   return <div className={classNameMap} ref={mapRef}></div>;
 }

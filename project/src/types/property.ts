@@ -1,62 +1,56 @@
 type City = {
-  cityName: string;
-  locationLat: number;
-  locationLong: number;
-  locationZoom: number;
-};
-
-type NearCard = {
-  src: string;
-  price: number;
-  isFavorite: boolean;
-  title: string;
-  features: string;
-  id: number;
-};
-
-type FeaturesType = {
-  entire: string;
-  bedrooms: number;
-  adults: number;
-};
-
-type HostType = {
-  hostId: number;
-  hostSrc: string;
-  hostName: string;
-  hostStatus: boolean;
-  hostDescription: string;
-};
-
-type ImagesType = {
-  imageSrc: string;
-  imageAlt: string;
-  id: number;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  name: string;
 };
 
 type OfferType = {
+  bedrooms: number;
   city: City;
-  images: ImagesType[];
-  mark: string;
+  images: string[];
+  description: string;
   title: string;
+  previewImage: string;
   rating: number;
   isFavorite: boolean;
-  features: FeaturesType;
+  isPremium: boolean;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  goods: string[];
+  maxAdults: number;
   price: number;
-  insideItems: string[];
-  host: HostType;
-  cardSrc: string;
+  host: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
+  type: string;
   id: number;
-  nearCard: NearCard;
 };
 
 type ReviewsType = {
-  src: string;
-  userName: string;
+  user: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
   comment: string;
   date: string;
   id: number;
   rating: number;
 };
 
-export type {OfferType, ReviewsType, City};
+type NewReview = {
+  comment: string;
+  rating: number;
+};
+
+export type {NewReview, OfferType, ReviewsType, City};

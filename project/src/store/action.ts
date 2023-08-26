@@ -1,17 +1,22 @@
 import {createAction} from '@reduxjs/toolkit';
-import {OfferType} from '../types/property';
-import {SortType} from '../const';
+import {OfferType, ReviewsType} from '../types/property';
+import {SortType, AuthorizationStatus, AppRoute} from '../const';
 
 const changeCity = createAction('CHANGE_CITY',(city: string) => ({
   payload: {
     city,
   },
 }));
-const fillOfferList = createAction('FILL_OFFER_LIST',(city: string) => ({
-  payload: {
-    city,
-  },
-}));
+const fillOfferList = createAction('FILL_OFFER_LIST',(offers: OfferType[], city: string) => {
+  const offersCity = offers.filter((offer) => offer.city.name === city);
+
+  return {
+    payload: {
+      offersCity: offersCity,
+    },
+  };
+}
+);
 
 const sortOffers = createAction('SORT_CARDS',(offersCity: OfferType[], currentSortType: string) => {
   switch (currentSortType) {
@@ -54,4 +59,51 @@ const sortOffers = createAction('SORT_CARDS',(offersCity: OfferType[], currentSo
   }
 });
 
-export {changeCity, fillOfferList, sortOffers};
+const loadUserInfo = createAction('LOAD_USER_INFO', (userEmail: string, avatarUrl: string) => ({
+  payload: {
+    userEmail,
+    avatarUrl,
+  },
+}));
+
+const redirectToRoute = createAction('REDIRECT_TO_ROUTE', (toRoute: AppRoute) => ({
+  payload: toRoute,
+}));
+
+const loadReviews = createAction('LOAD_REVIEWS', (reviews: ReviewsType[]) => ({
+  payload: {
+    reviews: reviews,
+  },
+}));
+
+const loadOffers = createAction<OfferType[]>('LOAD_OFFERS');
+
+const setOffersDataLoadingStatus = createAction<boolean>('DATA_LOADING_STATUS');
+
+const requireAuthorization = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
+
+const loadCurrentOffer = createAction('LOAD_CURRENT_OFFER', (currentOffer: OfferType) => ({
+  payload: {
+    currentOffer,
+  },
+}));
+
+const loadNearbyOffers = createAction('LOAD_NEARBY_OFFERS', (nearbyOffers: OfferType[]) => ({
+  payload: {
+    nearbyOffers,
+  },
+}));
+
+const setOfferDataLoadingStatus = createAction('SET_OFFER_DATA_LOADING_STATUS', (isOfferDataLoading: boolean) => ({
+  payload: {
+    isOfferDataLoading: isOfferDataLoading,
+  },
+}));
+
+const setFormActiveState = createAction('SET_FORM_ACTIVE_STATE', (formActiveState: boolean) => ({
+  payload: {
+    formActiveState,
+  },
+}));
+
+export {setFormActiveState, loadNearbyOffers, setOfferDataLoadingStatus, loadCurrentOffer, loadReviews, redirectToRoute, loadUserInfo, changeCity, fillOfferList, sortOffers, loadOffers, setOffersDataLoadingStatus, requireAuthorization};
