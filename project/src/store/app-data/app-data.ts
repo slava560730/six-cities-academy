@@ -21,7 +21,6 @@ const initialState: AppData = {
   formActiveState: false,
   isFavoriteStatus: false,
   favoriteOffers: [],
-
 };
 
 const appData = createSlice({
