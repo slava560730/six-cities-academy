@@ -2,17 +2,17 @@ import {Link} from 'react-router-dom';
 import {Header} from '../../components/header/header';
 import {Helmet} from 'react-helmet-async';
 import {FavoriteCard} from '../../components/favorites-card/favorite-card';
-import {OfferType} from '../../types/property';
+import { useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/app-data/selectors';
+import { FavoritesEmptyPage } from '../favorites-empty/favorites-empty-page';
 
-type FavoriteProps = {
-  offers: OfferType[];
-};
-
-function FavoritesPage({offers}: FavoriteProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+function FavoritesPage(): JSX.Element {
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const citiesFavoriteOffers = new Set(favoriteOffers.map((offer) => offer.city.name));
 
-  return (
+  return favoriteOffers.length === 0 ? (
+    <FavoritesEmptyPage />
+  ) : (
     <div className="page">
       <Helmet>
         <title>Favorites</title>

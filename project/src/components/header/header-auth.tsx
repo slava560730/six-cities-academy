@@ -1,13 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
-import React from 'react';
+import { fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
+import React, { useEffect } from 'react';
+import { getUserEmail } from '../../store/user-process/selectors';
+import { getFavoriteOffersCount, getPostFavoriteStateStatus } from '../../store/app-data/selectors';
 
 function HeaderAuth (): JSX.Element {
   const dispatch = useAppDispatch();
-  const userEmail = useAppSelector((state) => state.userEmail);
-  // const avatarUrl = useAppSelector((state) => state.avatarUrl);
+  const userEmail = useAppSelector(getUserEmail);
+  const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
+  const postFavoriteStateStatus = useAppSelector(getPostFavoriteStateStatus);
+
+  useEffect(() => {
+    if (!postFavoriteStateStatus) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [postFavoriteStateStatus]);
 
   return (
     <nav className="header__nav">
@@ -17,7 +26,7 @@ function HeaderAuth (): JSX.Element {
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
             <span className="header__user-name user__name">{userEmail}</span>
-            <span className="header__favorite-count">3</span>
+            <span className="header__favorite-count">{favoriteOffersCount}</span>
           </Link>
         </li>
         <li className="header__nav-item">

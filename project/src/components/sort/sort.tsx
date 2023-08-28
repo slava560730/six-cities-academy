@@ -1,13 +1,13 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {SortType} from '../../const';
-import {sortOffers} from '../../store/action';
+import {SELECT_OPEN, SortType} from '../../const';
 import cn from 'classnames';
 import {useState} from 'react';
+import { sortOffersType } from '../../store/app-process/app-process';
+import { getCurrentSortType} from '../../store/app-process/selectors';
 
 function Sort (): JSX.Element {
   const dispatch = useAppDispatch();
-  const currentSortType = useAppSelector((state) => state.currentSortType);
-  const offersCity = useAppSelector((state) => state.offerCity);
+  const currentSortType = useAppSelector(getCurrentSortType);
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -26,25 +26,53 @@ function Sort (): JSX.Element {
       <ul className={cn('places__options places__options--custom', {'places__options--opened': isActive})}>
         <li className={cn('places__option',
           {'places__option--active':currentSortType === SortType.Popular})}
-        onClick={() => dispatch(sortOffers(offersCity,SortType.Popular))}
+        onClick={() => {
+          dispatch(
+            sortOffersType({
+              currentSortType: SortType.Popular,
+              selectState: !SELECT_OPEN,
+            })
+          );
+        }}
         >
           Popular
         </li>
         <li className={cn('places__option',
           {'places__option--active':currentSortType === SortType.PriceLowToHigh})}
-        onClick={() => dispatch(sortOffers(offersCity, SortType.PriceLowToHigh))}
+        onClick={() => {
+          dispatch(
+            sortOffersType({
+              currentSortType: SortType.PriceLowToHigh,
+              selectState: !SELECT_OPEN,
+            })
+          );
+        }}
         >
           Price: low to high
         </li>
         <li className={cn('places__option',
           {'places__option--active':currentSortType === SortType.PriceHighToLow})}
-        onClick={() => dispatch(sortOffers(offersCity, SortType.PriceHighToLow))}
+        onClick={() => {
+          dispatch(
+            sortOffersType({
+              currentSortType: SortType.PriceHighToLow,
+              selectState: !SELECT_OPEN,
+            })
+          );
+        }}
         >
           Price: high to low
         </li>
         <li className={cn('places__option',
           {'places__option--active':currentSortType === SortType.TopRatedFirst})}
-        onClick={() => dispatch(sortOffers(offersCity, SortType.TopRatedFirst))}
+        onClick={() => {
+          dispatch(
+            sortOffersType({
+              currentSortType: SortType.TopRatedFirst,
+              selectState: !SELECT_OPEN,
+            })
+          );
+        }}
         >
           Top rated first
         </li>

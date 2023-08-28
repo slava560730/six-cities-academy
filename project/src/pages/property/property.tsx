@@ -1,28 +1,43 @@
 import {Header} from '../../components/header/header';
-import {AddFormReview} from '../../components/add-form-review/add-form-review';
+import { AddReviewsList } from '../../components/reviews-list/reviews-list';
 import {Helmet} from 'react-helmet-async';
 import {Map} from '../../components/map/map';
-import {classNamesMap} from '../../const';
+import {classNamesMap, AppRoute, FavoriteState, NULL_CITY_ID} from '../../const';
 import {useEffect, useState} from 'react';
 import {Card} from '../../components/card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { useParams } from 'react-router-dom';
-import {AuthorizationStatus} from '../../const';
-import {fetchNearbyOffersAction, fetchReviewsAction, fetchCurrentOfferAction} from '../../store/api-actions';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  fetchNearbyOffersAction,
+  fetchReviewsAction,
+  fetchCurrentOfferAction,
+  fetchPostFavoriteStateAction
+} from '../../store/api-actions';
 import { NotFoundPage } from '../not-found/not-found-page';
+import {
+  getOfferDataLoadingState,
+  getNearbyOffers,
+  getCurrentOffer,
+} from '../../store/app-data/selectors';
+import { getAuthLoggedStatus } from '../../store/user-process/selectors';
+import { LoadingScreen } from '../loading-screen/loading-screen';
+import cn from 'classnames';
+import { getSortedOffers } from '../../store/app-process/selectors';
 
 function PropertyPage (): JSX.Element {
-  // const defaultOffer = useAppSelector((state) => state.offers[0]);
-  const dispatch = useAppDispatch();
-
-  const [selectedOffer, setSelectedOffer] = useState(500);
-  const offersCity = useAppSelector((state) => state.offerCity);
+  const [selectedOffer, setSelectedOffer] = useState(NULL_CITY_ID);
   const params = useParams();
   const numberId = Number(params.id);
-  const nearOffers = useAppSelector((state) => state.nearbyOffers);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const offersCity = useAppSelector(getSortedOffers);
+  const isOfferDataLoading = useAppSelector(getOfferDataLoadingState);
+  const nearOffers = useAppSelector(getNearbyOffers);
   const nearOffersCorrect = nearOffers.slice(0, 3);
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
-  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const isAuthLogged = useAppSelector(getAuthLoggedStatus);
+
 
   useEffect(() => {
     dispatch(fetchReviewsAction(numberId));
@@ -30,9 +45,25 @@ function PropertyPage (): JSX.Element {
     dispatch(fetchNearbyOffersAction(numberId));
   }, [numberId]);
 
+  if (isOfferDataLoading) {
+    return <LoadingScreen />;
+  }
+
   if (!currentOffer) {
     return <NotFoundPage />;
   }
+
+  const handleFavoriteButtonClick = () => {
+    if (!isAuthLogged) {
+      navigate(AppRoute.Login);
+    }
+    dispatch(
+      fetchPostFavoriteStateAction([
+        currentOffer.isFavorite ? FavoriteState.NotFavorite : FavoriteState.Favorite,
+        currentOffer.id,
+      ])
+    );
+  };
 
   return (
     <div className="page">
@@ -47,7 +78,7 @@ function PropertyPage (): JSX.Element {
             <div className="property__gallery">
               {currentOffer.images.map((img) => (
                 <div className="property__image-wrapper" key = {img}>
-                  <img className="property__image" src={img} alt={'desk'}/>
+                  <img className="property__image" src={img} alt={currentOffer.description}/>
                 </div>
               ))}
             </div>
@@ -61,7 +92,13 @@ function PropertyPage (): JSX.Element {
                 <h1 className="property__name">
                   {}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className={cn('property__bookmark-button button', {
+                    'property__bookmark-button--active': currentOffer.isFavorite,
+                  })}
+                  type="button"
+                  onClick={handleFavoriteButtonClick}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -119,7 +156,7 @@ function PropertyPage (): JSX.Element {
                   </p>
                 </div>
               </div>
-              {authorizationStatus === AuthorizationStatus.Auth && <AddFormReview />}
+              <AddReviewsList />
             </div>
           </div>
           <section className="property__map map">
