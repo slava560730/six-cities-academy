@@ -9,7 +9,6 @@ function Sort (): JSX.Element {
   const dispatch = useAppDispatch();
   const currentSortType = useAppSelector(getCurrentSortType);
   const [isActive, setIsActive] = useState(false);
-  // const selectState = useAppSelector(getSelectState);
 
   return (
     <form className="places__sorting" action="#" method="get">
