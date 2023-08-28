@@ -1,5 +1,4 @@
 import { appProcess } from './app-process';
-import { changeCity, sortOffersType } from "./app-process";
 import {INITIAL_CITY, SortType} from '../../const';
 
 describe ('Reducer: appProcess', () => {

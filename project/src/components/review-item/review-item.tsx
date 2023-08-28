@@ -1,4 +1,5 @@
 import {ReviewsType} from '../../types/property';
+import moment from 'moment';
 
 type AddReviewItemProps = {
   review: ReviewsType;
@@ -25,7 +26,7 @@ function AddReviewItem ({review}: AddReviewItemProps): JSX.Element{
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{moment(review.date).format('MMMM Do YYYY, h:mm:ss a')}</time>
       </div>
     </li>
   );
