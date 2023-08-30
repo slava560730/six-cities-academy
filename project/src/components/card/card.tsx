@@ -42,7 +42,10 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
       }}
       className="cities__card place-card"
     >
-      <div className="place-card__mark">
+      <div className={cn({
+        'place-card__mark': offer.isPremium,
+      })}
+      >
         <span>{(offer.isPremium) && 'Premium'}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">

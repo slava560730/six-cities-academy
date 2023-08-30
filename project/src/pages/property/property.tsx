@@ -85,12 +85,15 @@ function PropertyPage (): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
+              <div className={cn({
+                'property__mark': currentOffer.isPremium,
+              })}
+              >
                 <span>{(currentOffer.isPremium) && 'Premium'}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {}
+                  {currentOffer.title}
                 </h1>
                 <button
                   className={cn('property__bookmark-button button', {
@@ -99,7 +102,11 @@ function PropertyPage (): JSX.Element {
                   type="button"
                   onClick={handleFavoriteButtonClick}
                 >
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className={cn('property__bookmark-icon', {
+                    'property__bookmark-icon--active': currentOffer.isFavorite,
+                  })}
+                  width="31" height="33"
+                  >
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -160,7 +167,7 @@ function PropertyPage (): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map selectedOffer={selectedOffer} offers={offersCity} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={currentOffer.id} offers={nearOffersCorrect} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">

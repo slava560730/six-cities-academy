@@ -1,21 +1,26 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SELECT_OPEN, SortType} from '../../const';
 import cn from 'classnames';
-import {useState} from 'react';
+// import {useState} from 'react';
 import { sortOffersType } from '../../store/app-process/app-process';
-import { getCurrentSortType} from '../../store/app-process/selectors';
+import {getCurrentSortType, getSelectState} from '../../store/app-process/selectors';
 
 function Sort (): JSX.Element {
   const dispatch = useAppDispatch();
   const currentSortType = useAppSelector(getCurrentSortType);
-  const [isActive, setIsActive] = useState(false);
+  const selectState = useAppSelector(getSelectState);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}
         onClick={() => {
-          setIsActive(!isActive);
+          dispatch(
+            sortOffersType({
+              currentSortType: currentSortType,
+              selectState: SELECT_OPEN,
+            })
+          );
         }}
       >
         {currentSortType}
@@ -23,7 +28,7 @@ function Sort (): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={cn('places__options places__options--custom', {'places__options--opened': isActive})}>
+      <ul className={cn('places__options places__options--custom', {'places__options--opened': selectState})}>
         <li className={cn('places__option',
           {'places__option--active':currentSortType === SortType.Popular})}
         onClick={() => {

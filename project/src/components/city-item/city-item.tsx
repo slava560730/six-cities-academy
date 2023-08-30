@@ -1,7 +1,9 @@
-import { useAppDispatch } from '../../hooks';
-import { changeCity } from '../../store/app-process/app-process';
+import {useAppDispatch} from '../../hooks';
+import { changeCity, sortOffersType } from '../../store/app-process/app-process';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import {SELECT_OPEN, SortType} from '../../const';
+
 
 type CityItemProps = {
   city: string;
@@ -18,8 +20,15 @@ function CityItem({ selectedCity, city}: CityItemProps): JSX.Element {
           'tabs__item--active': city === selectedCity,
         })}
         to="#"
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+          e.preventDefault();
           dispatch(changeCity(city));
+          dispatch(
+            sortOffersType({
+              currentSortType: SortType.Popular,
+              selectState: !SELECT_OPEN,
+            })
+          );
         }}
       >
         <span>{city}</span>
