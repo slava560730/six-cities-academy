@@ -22,7 +22,8 @@ import {
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import cn from 'classnames';
-import { getSortedOffers } from '../../store/app-process/selectors';
+import { OfferType } from '../../types/property';
+// import { getSortedOffers } from '../../store/app-process/selectors';
 
 function PropertyPage (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(NULL_CITY_ID);
@@ -31,11 +32,12 @@ function PropertyPage (): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const offersCity = useAppSelector(getSortedOffers);
+  // const offersCity = useAppSelector(getSortedOffers);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingState);
   const nearOffers = useAppSelector(getNearbyOffers);
   const nearOffersCorrect = nearOffers.slice(0, 3);
   const currentOffer = useAppSelector(getCurrentOffer);
+  // const nearOffersProperty = nearOffersCorrect.push(currentOffer);
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
 
 
@@ -167,7 +169,7 @@ function PropertyPage (): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map selectedOffer={currentOffer.id} offers={nearOffersCorrect} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={currentOffer.id} offers={[...nearOffersCorrect, currentOffer] as OfferType[]} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">
