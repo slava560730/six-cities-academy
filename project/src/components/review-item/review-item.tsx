@@ -26,7 +26,7 @@ function AddReviewItem ({review}: AddReviewItemProps): JSX.Element{
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{moment(review.date).format('MMMM Do YYYY, h:mm:ss a')}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{moment(review.date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );

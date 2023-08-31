@@ -7,13 +7,15 @@ import { AppRoute, NULL_CITY_ID } from '../../const';
 import { fetchPostFavoriteStateAction } from '../../store/api-actions';
 import { FavoriteState} from '../../const';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
+import {WordToUpper} from '../../utils';
 
 type CardProps = {
   offer: OfferType;
   setSelectedOffer(value: number): void;
+  isNeedMouseLeave: boolean;
 };
 
-function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
+function Card ({offer, setSelectedOffer, isNeedMouseLeave}: CardProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
@@ -35,7 +37,9 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         setSelectedOffer(offer.id);
       }}
       onMouseLeave={() => {
-        setSelectedOffer(NULL_CITY_ID);
+        if (isNeedMouseLeave) {
+          setSelectedOffer(NULL_CITY_ID);
+        }
       }}
       onClick={() =>{
         window.scrollTo(0,0);
@@ -81,7 +85,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{WordToUpper(offer.type)}</p>
       </div>
     </article>
   );

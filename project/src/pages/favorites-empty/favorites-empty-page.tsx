@@ -1,7 +1,12 @@
 import {Link} from 'react-router-dom';
 import {Header} from '../../components/header/header';
+import {changeCity} from '../../store/app-process/app-process';
+import {INITIAL_CITY} from '../../const';
+import {useAppDispatch} from '../../hooks';
 
 function FavoritesEmptyPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="page page--favorites-empty">
       <Header/>
@@ -18,7 +23,12 @@ function FavoritesEmptyPage(): JSX.Element {
         </div>
       </main>
       <footer className="footer">
-        <Link className="footer__logo-link" to="/">
+        <Link
+          onClick={() => {
+            dispatch(changeCity(INITIAL_CITY));
+          }}
+          className="footer__logo-link" to="/"
+        >
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </Link>
       </footer>

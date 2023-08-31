@@ -2,11 +2,14 @@ import {Link} from 'react-router-dom';
 import {Header} from '../../components/header/header';
 import {Helmet} from 'react-helmet-async';
 import {FavoriteCard} from '../../components/favorites-card/favorite-card';
-import { useAppSelector } from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import { getFavoriteOffers } from '../../store/app-data/selectors';
 import { FavoritesEmptyPage } from '../favorites-empty/favorites-empty-page';
+import {changeCity} from '../../store/app-process/app-process';
+import {INITIAL_CITY} from '../../const';
 
 function FavoritesPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const favoriteOffers = useAppSelector(getFavoriteOffers);
   const citiesFavoriteOffers = new Set(favoriteOffers.map((offer) => offer.city.name));
 
@@ -28,9 +31,14 @@ function FavoritesPage(): JSX.Element {
                 <li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
+                      <Link
+                        onClick={() => {
+                          dispatch(changeCity(city));
+                        }}
+                        className="locations__item-link" to="/"
+                      >
                         <span>{city}</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="favorites__places">
@@ -45,7 +53,12 @@ function FavoritesPage(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to="/">
+        <Link
+          onClick={() => {
+            dispatch(changeCity(INITIAL_CITY));
+          }}
+          className="footer__logo-link" to="/"
+        >
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </Link>
       </footer>

@@ -1,5 +1,5 @@
 import { Header } from '../../components/header/header';
-import { classNamesMap } from '../../const';
+import {classNamesMap} from '../../const';
 import {OfferList} from '../../components/offer-list/offer-list';
 import {useState} from 'react';
 import {Map} from '../../components/map/map';

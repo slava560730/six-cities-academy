@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../hooks';
 import { FavoriteState } from '../../const';
 import { fetchPostFavoriteStateAction } from '../../store/api-actions';
+import {WordToUpper} from '../../utils';
 
 type FavoriteCardProps = {
   offer: OfferType;
@@ -56,7 +57,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{WordToUpper(offer.type)}</p>
       </div>
     </article>
   );

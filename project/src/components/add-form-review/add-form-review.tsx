@@ -1,10 +1,12 @@
-import {ReviewsType} from '../../types/property';
-import {useState, FormEvent} from 'react';
+// import {ReviewsType} from '../../types/property';
+import React, {FormEvent} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { fetchPostReviewAction } from '../../store/api-actions';
-import { MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const';
-import { getFormActiveState } from '../../store/app-data/selectors';
+import {DEFAULT_REVIEW_STATE, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, REVIEW_RATING} from '../../const';
+import {getFormActiveState, getFormData} from '../../store/app-data/selectors';
+import ReviewStar from '../reviews-star/reviews-star';
+import {changeFormData} from '../../store/app-data/app-data';
 
 function AddFormReview (): JSX.Element{
   const formActiveState = useAppSelector(getFormActiveState);
@@ -12,72 +14,58 @@ function AddFormReview (): JSX.Element{
   const params = useParams();
   const numberId = Number(params.id);
 
-  const [formData, setFormData] = useState({
-    comment: '',
-    rating: 0,
-  });
+  const formData = useAppSelector(getFormData);
+  const { comment, rating } = formData;
+
+  const fieldChangeHandle = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = target;
+    dispatch(changeFormData({ ...formData, [name]: value }));
+  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(fetchPostReviewAction([formData, numberId]));
-    setFormData({
-      comment: '',
-      rating: 0,
-    });
-  };
-
-  const fieldChangeHandle = (evt: {
-    target: { value: ReviewsType[keyof ReviewsType]; name: string };
-  }) => {
-    const { name, value } = evt.target;
-    setFormData({ ...formData, [name]: value });
+    dispatch(changeFormData(DEFAULT_REVIEW_STATE));
   };
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={fieldChangeHandle}/>
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" onChange={fieldChangeHandle}/>
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" onChange={fieldChangeHandle}/>
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" onChange={fieldChangeHandle}/>
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" onChange={fieldChangeHandle}/>
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {REVIEW_RATING.map((data) => (
+          <ReviewStar
+            onFieldChangeHandle={fieldChangeHandle}
+            value={data.value}
+            title={data.title}
+            rating={rating}
+            key={data.value}
+          />
+        ))}
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="comment" maxLength={MAX_REVIEW_LENGTH} placeholder ="Tell how was your stay, what you like and what can be improved" onChange={fieldChangeHandle} value={formData.comment} disabled ={formActiveState}></textarea>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="comment"
+        name="comment"
+        maxLength={MAX_REVIEW_LENGTH}
+        placeholder ="Tell how was your stay, what you like and what can be improved"
+        onChange={fieldChangeHandle}
+        value={comment}
+        disabled ={formActiveState}
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_REVIEW_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={formData.comment.length < MIN_REVIEW_LENGTH || formActiveState}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={comment.length < MIN_REVIEW_LENGTH || formActiveState || rating === 0}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

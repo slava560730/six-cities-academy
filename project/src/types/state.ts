@@ -1,6 +1,6 @@
 import {store} from '../store';
 import {AuthorizationStatus} from '../const';
-import {OfferType, ReviewsType} from './property';
+import {NewReview, OfferType, ReviewsType} from './property';
 
 type State = ReturnType<typeof store.getState>;
 
@@ -22,6 +22,7 @@ type AppData = {
   formActiveState: boolean;
   isFavoriteStatus: boolean;
   favoriteOffers: OfferType[];
+  formData: NewReview;
 };
 
 type AppProcess = {

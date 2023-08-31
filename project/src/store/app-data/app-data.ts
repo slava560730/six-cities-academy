@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {Namespace} from '../../const';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Namespace, DEFAULT_REVIEW_STATE} from '../../const';
 import {AppData} from '../../types/state';
 import {fetchOffersAction,
   fetchCurrentOfferAction,
@@ -10,6 +10,7 @@ import {fetchOffersAction,
   fetchPostFavoriteStateAction,
 } from '../api-actions';
 import { updateOffers } from '../../utils';
+import {NewReview} from '../../types/property';
 
 const initialState: AppData = {
   offers: [],
@@ -21,12 +22,17 @@ const initialState: AppData = {
   formActiveState: false,
   isFavoriteStatus: false,
   favoriteOffers: [],
+  formData: DEFAULT_REVIEW_STATE,
 };
 
 const appData = createSlice({
   name: Namespace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    changeFormData: (state, action: PayloadAction<NewReview>) => {
+      state.formData = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -77,3 +83,4 @@ const appData = createSlice({
 });
 
 export {appData};
+export const { changeFormData } = appData.actions;

@@ -1,4 +1,4 @@
-import { OfferType } from './types/property';
+import {OfferType, ReviewsType} from './types/property';
 
 const updateOffers = (offers: OfferType[], updatedOffer: OfferType | null) =>
   offers.map((item) => {
@@ -19,6 +19,11 @@ function getRandomNumber (min: number, max: number) {
   return result;
 }
 
+const sortByDay = (array: ReviewsType[]) => [...array].sort((dataA, dataB) => Number(dataA.date) - Number(dataB.date));
+
+const WordToUpper = (word: string) => word[0].toUpperCase() + word.slice(1);
+
+
 const getRandomArrayElement = (elements: string[]) => elements[getRandomNumber(0, elements.length - 1)];
 
-export {updateOffers, getRandomArrayElement};
+export {sortByDay, WordToUpper, updateOffers, getRandomArrayElement};

@@ -2,7 +2,7 @@ import {Header} from '../../components/header/header';
 import { AddReviewsList } from '../../components/reviews-list/reviews-list';
 import {Helmet} from 'react-helmet-async';
 import {Map} from '../../components/map/map';
-import {classNamesMap, AppRoute, FavoriteState, NULL_CITY_ID} from '../../const';
+import {classNamesMap, AppRoute, FavoriteState, NEED_MOUSE_LEAVE} from '../../const';
 import {useEffect, useState} from 'react';
 import {Card} from '../../components/card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
@@ -23,23 +23,19 @@ import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import cn from 'classnames';
 import { OfferType } from '../../types/property';
-// import { getSortedOffers } from '../../store/app-process/selectors';
 
 function PropertyPage (): JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState(NULL_CITY_ID);
   const params = useParams();
   const numberId = Number(params.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // const offersCity = useAppSelector(getSortedOffers);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingState);
   const nearOffers = useAppSelector(getNearbyOffers);
   const nearOffersCorrect = nearOffers.slice(0, 3);
   const currentOffer = useAppSelector(getCurrentOffer);
-  // const nearOffersProperty = nearOffersCorrect.push(currentOffer);
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
-
+  const [selectedOffer, setSelectedOffer] = useState(numberId);
 
   useEffect(() => {
     dispatch(fetchReviewsAction(numberId));
@@ -169,7 +165,7 @@ function PropertyPage (): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map selectedOffer={currentOffer.id} offers={[...nearOffersCorrect, currentOffer] as OfferType[]} classNameMap={classNamesMap.Property}></Map>
+            <Map selectedOffer={selectedOffer} offers={[...nearOffersCorrect, currentOffer] as OfferType[]} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">
@@ -177,7 +173,7 @@ function PropertyPage (): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {nearOffersCorrect.map((offer) => (
-                <Card offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
+                <Card isNeedMouseLeave={!NEED_MOUSE_LEAVE} offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
               ))}
             </div>
           </section>
