@@ -1,4 +1,5 @@
 import {OfferType, ReviewsType} from './types/property';
+import dayjs from 'dayjs';
 
 const updateOffers = (offers: OfferType[], updatedOffer: OfferType | null) =>
   offers.map((item) => {
@@ -19,10 +20,15 @@ function getRandomNumber (min: number, max: number) {
   return result;
 }
 
-const sortByDay = (array: ReviewsType[]) => [...array].sort((dataA, dataB) => Number(dataA.date) - Number(dataB.date));
+const sortByDay = (reviewA: ReviewsType, reviewB: ReviewsType) => {
+  if (dayjs(reviewB.date).isAfter(dayjs(reviewA.date))) {
+    return 1;
+  } else {
+    return -1;
+  }
+};
 
 const WordToUpper = (word: string) => word[0].toUpperCase() + word.slice(1);
-
 
 const getRandomArrayElement = (elements: string[]) => elements[getRandomNumber(0, elements.length - 1)];
 

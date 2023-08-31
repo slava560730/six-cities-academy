@@ -18,6 +18,7 @@ import {
   getOfferDataLoadingState,
   getNearbyOffers,
   getCurrentOffer,
+  getServerError,
 } from '../../store/app-data/selectors';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 import { LoadingScreen } from '../loading-screen/loading-screen';
@@ -29,6 +30,7 @@ function PropertyPage (): JSX.Element {
   const numberId = Number(params.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isServerError = useAppSelector(getServerError);
 
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingState);
   const nearOffers = useAppSelector(getNearbyOffers);
@@ -38,16 +40,18 @@ function PropertyPage (): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(numberId);
 
   useEffect(() => {
-    dispatch(fetchReviewsAction(numberId));
-    dispatch(fetchCurrentOfferAction(numberId));
-    dispatch(fetchNearbyOffersAction(numberId));
+    if (numberId !== undefined) {
+      dispatch(fetchReviewsAction(numberId));
+      dispatch(fetchCurrentOfferAction(numberId));
+      dispatch(fetchNearbyOffersAction(numberId));
+    }
   }, [numberId]);
 
-  if (isOfferDataLoading) {
+  if (isOfferDataLoading || !currentOffer) {
     return <LoadingScreen />;
   }
 
-  if (!currentOffer) {
+  if (isServerError) {
     return <NotFoundPage />;
   }
 

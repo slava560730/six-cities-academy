@@ -23,6 +23,7 @@ const initialState: AppData = {
   isFavoriteStatus: false,
   favoriteOffers: [],
   formData: DEFAULT_REVIEW_STATE,
+  isServerError: false,
 };
 
 const appData = createSlice({
@@ -41,13 +42,22 @@ const appData = createSlice({
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersDataLoading = false;
+        state.isServerError = false;
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isServerError = true;
       })
       .addCase(fetchCurrentOfferAction.pending, (state) => {
         state.isOfferDataLoading = true;
+        state.isServerError = false;
+      })
+      .addCase(fetchCurrentOfferAction.rejected, (state) => {
+        state.isServerError = true;
       })
       .addCase(fetchCurrentOfferAction.fulfilled, (state,action) => {
         state.currentOffer = action.payload;
         state.isOfferDataLoading = false;
+        state.isServerError = false;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
@@ -60,6 +70,9 @@ const appData = createSlice({
       })
       .addCase(fetchPostReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+        state.formActiveState = false;
+      })
+      .addCase(fetchPostReviewAction.rejected, (state) => {
         state.formActiveState = false;
       })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {

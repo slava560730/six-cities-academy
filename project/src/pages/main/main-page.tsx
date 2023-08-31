@@ -7,13 +7,8 @@ import {CityList} from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 import {Sort} from '../../components/sort/sort';
 import { MainEmptyPage } from '../main-empty/main-empty';
-import { store } from '../../store';
-import { fetchOffersAction, checkAuthAction } from '../../store/api-actions';
 import { getCurrentCity, getSortedOffers } from '../../store/app-process/selectors';
 import { NULL_CITY_ID } from '../../const';
-
-store.dispatch(fetchOffersAction());
-store.dispatch(checkAuthAction());
 
 function MainPage (): JSX.Element {
 

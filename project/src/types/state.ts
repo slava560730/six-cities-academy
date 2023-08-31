@@ -23,6 +23,7 @@ type AppData = {
   isFavoriteStatus: boolean;
   favoriteOffers: OfferType[];
   formData: NewReview;
+  isServerError: boolean;
 };
 
 type AppProcess = {
