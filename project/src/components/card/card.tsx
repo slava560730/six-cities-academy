@@ -8,15 +8,14 @@ import { fetchPostFavoriteStateAction } from '../../store/api-actions';
 import { FavoriteState} from '../../const';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 import {WordToUpper} from '../../utils';
+import { changeCurrentId } from '../../store/app-process/app-process';
 
 type CardProps = {
   offer: OfferType;
-  setSelectedOffer(value: number): void;
-  offerId: number;
   isNeedMouseLeave: boolean;
 };
 
-function Card ({offerId, offer, setSelectedOffer, isNeedMouseLeave}: CardProps): JSX.Element {
+function Card ({offer, isNeedMouseLeave}: CardProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
@@ -32,19 +31,25 @@ function Card ({offerId, offer, setSelectedOffer, isNeedMouseLeave}: CardProps):
     ]));
   };
 
+  const handleMouseOver = () => {
+    dispatch(changeCurrentId(offer.id));
+  };
+
+  const handleMouseLeave = () => {
+    if (isNeedMouseLeave) {
+      dispatch(changeCurrentId(NULL_CITY_ID));
+    }
+  };
+
+  const handleCardClick = () => {
+    window.scrollTo(0,0);
+  };
+
   return (
     <article
-      onMouseOver={() => {
-        setSelectedOffer(offerId);
-      }}
-      onMouseLeave={() => {
-        if (isNeedMouseLeave) {
-          setSelectedOffer(NULL_CITY_ID);
-        }
-      }}
-      onClick={() =>{
-        window.scrollTo(0,0);
-      }}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleCardClick}
       className="cities__card place-card"
     >
       <div className={cn({

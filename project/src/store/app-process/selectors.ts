@@ -6,6 +6,7 @@ import { createSelector } from '@reduxjs/toolkit';
 const getCurrentCity = (state: State): string => state[Namespace.App].city;
 const getCurrentSortType = (state: State): string => state[Namespace.App].currentSortType;
 const getSelectState = (state: State): boolean => state[Namespace.App].selectState;
+const getCurrentId = (state: State): number | null => state[Namespace.App].currentId;
 
 const getOffersByCity = createSelector(getOffers, getCurrentCity, (offers, currentCity) =>
   offers.filter((offer) => offer.city.name === currentCity)
@@ -29,6 +30,7 @@ const getSortedOffers = createSelector(
 );
 
 export {
+  getCurrentId,
   getCurrentCity,
   getCurrentSortType,
   getSelectState,

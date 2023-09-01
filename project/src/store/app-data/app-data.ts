@@ -16,7 +16,7 @@ const initialState: AppData = {
   offers: [],
   isOffersDataLoading: false,
   isOfferDataLoading: false,
-  currentOffer: undefined,
+  currentOffer: null,
   nearbyOffers : [],
   reviews: [],
   formActiveState: false,

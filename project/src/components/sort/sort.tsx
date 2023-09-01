@@ -1,7 +1,6 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SELECT_OPEN, SortType} from '../../const';
 import cn from 'classnames';
-// import {useState} from 'react';
 import { sortOffersType } from '../../store/app-process/app-process';
 import {getCurrentSortType, getSelectState} from '../../store/app-process/selectors';
 
