@@ -177,7 +177,7 @@ function PropertyPage (): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {nearOffersCorrect.map((offer) => (
-                <Card isNeedMouseLeave={!NEED_MOUSE_LEAVE} offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
+                <Card offerId ={offer.id} isNeedMouseLeave={!NEED_MOUSE_LEAVE} offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
               ))}
             </div>
           </section>

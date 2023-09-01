@@ -13,7 +13,7 @@ function OfferList({setSelectedOffer}: OfferListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offersCity.map((offer) => (
-        <Card isNeedMouseLeave={NEED_MOUSE_LEAVE} setSelectedOffer={setSelectedOffer} key={offer.id} offer={offer} />
+        <Card offerId ={offer.id} isNeedMouseLeave={NEED_MOUSE_LEAVE} setSelectedOffer={setSelectedOffer} key={offer.id} offer={offer} />
       ))}
     </div>
   );

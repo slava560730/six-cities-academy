@@ -12,10 +12,11 @@ import {WordToUpper} from '../../utils';
 type CardProps = {
   offer: OfferType;
   setSelectedOffer(value: number): void;
+  offerId: number;
   isNeedMouseLeave: boolean;
 };
 
-function Card ({offer, setSelectedOffer, isNeedMouseLeave}: CardProps): JSX.Element {
+function Card ({offerId, offer, setSelectedOffer, isNeedMouseLeave}: CardProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
@@ -34,7 +35,7 @@ function Card ({offer, setSelectedOffer, isNeedMouseLeave}: CardProps): JSX.Elem
   return (
     <article
       onMouseOver={() => {
-        setSelectedOffer(offer.id);
+        setSelectedOffer(offerId);
       }}
       onMouseLeave={() => {
         if (isNeedMouseLeave) {
