@@ -4,9 +4,10 @@ import {useMap} from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {OfferType} from '../../types/property';
+import { useAppSelector } from '../../hooks';
+import { getCurrentId } from '../../store/app-process/selectors';
 
 type MapProps = {
-  selectedOffer: number | null;
   classNameMap: string;
   offers: OfferType[];
 };
@@ -23,9 +24,10 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({selectedOffer, classNameMap, offers}: MapProps): JSX.Element {
+function Map({classNameMap, offers}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
+  const currentOfferId = useAppSelector(getCurrentId);
 
   const [markers, setMarkers] = useState<Marker[]>([]);
 
@@ -39,7 +41,7 @@ function Map({selectedOffer, classNameMap, offers}: MapProps): JSX.Element {
         });
         marker
           .setIcon(
-            selectedOffer !== undefined && id === selectedOffer
+            currentOfferId !== null && id === currentOfferId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -51,7 +53,7 @@ function Map({selectedOffer, classNameMap, offers}: MapProps): JSX.Element {
     return markers.forEach((marker) => {
       marker.remove();
     });
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, currentOfferId]);
 
   return <div className={classNameMap} ref={mapRef}></div>;
 }

@@ -7,13 +7,15 @@ import { AppRoute, NULL_CITY_ID } from '../../const';
 import { fetchPostFavoriteStateAction } from '../../store/api-actions';
 import { FavoriteState} from '../../const';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
+import {WordToUpper} from '../../utils';
+import { changeCurrentId } from '../../store/app-process/app-process';
 
 type CardProps = {
   offer: OfferType;
-  setSelectedOffer(value: number): void;
+  isNeedMouseLeave: boolean;
 };
 
-function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
+function Card ({offer, isNeedMouseLeave}: CardProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
@@ -29,20 +31,31 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
     ]));
   };
 
+  const handleMouseOver = () => {
+    dispatch(changeCurrentId(offer.id));
+  };
+
+  const handleMouseLeave = () => {
+    if (isNeedMouseLeave) {
+      dispatch(changeCurrentId(NULL_CITY_ID));
+    }
+  };
+
+  const handleCardClick = () => {
+    window.scrollTo(0,0);
+  };
+
   return (
     <article
-      onMouseOver={() => {
-        setSelectedOffer(offer.id);
-      }}
-      onMouseLeave={() => {
-        setSelectedOffer(NULL_CITY_ID);
-      }}
-      onClick={() =>{
-        window.scrollTo(0,0);
-      }}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleCardClick}
       className="cities__card place-card"
     >
-      <div className="place-card__mark">
+      <div className={cn({
+        'place-card__mark': offer.isPremium,
+      })}
+      >
         <span>{(offer.isPremium) && 'Premium'}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -78,7 +91,7 @@ function Card ({offer, setSelectedOffer}: CardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{WordToUpper(offer.type)}</p>
       </div>
     </article>
   );

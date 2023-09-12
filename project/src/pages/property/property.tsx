@@ -2,8 +2,8 @@ import {Header} from '../../components/header/header';
 import { AddReviewsList } from '../../components/reviews-list/reviews-list';
 import {Helmet} from 'react-helmet-async';
 import {Map} from '../../components/map/map';
-import {classNamesMap, AppRoute, FavoriteState, NULL_CITY_ID} from '../../const';
-import {useEffect, useState} from 'react';
+import {classNamesMap, AppRoute, FavoriteState, NEED_MOUSE_LEAVE} from '../../const';
+import {useEffect} from 'react';
 import {Card} from '../../components/card/card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -18,38 +18,40 @@ import {
   getOfferDataLoadingState,
   getNearbyOffers,
   getCurrentOffer,
+  getServerError,
 } from '../../store/app-data/selectors';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import cn from 'classnames';
-import { getSortedOffers } from '../../store/app-process/selectors';
+import { OfferType } from '../../types/property';
+import { WordToUpper } from '../../utils';
 
 function PropertyPage (): JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState(NULL_CITY_ID);
   const params = useParams();
   const numberId = Number(params.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isServerError = useAppSelector(getServerError);
 
-  const offersCity = useAppSelector(getSortedOffers);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingState);
   const nearOffers = useAppSelector(getNearbyOffers);
   const nearOffersCorrect = nearOffers.slice(0, 3);
   const currentOffer = useAppSelector(getCurrentOffer);
   const isAuthLogged = useAppSelector(getAuthLoggedStatus);
 
-
   useEffect(() => {
-    dispatch(fetchReviewsAction(numberId));
-    dispatch(fetchCurrentOfferAction(numberId));
-    dispatch(fetchNearbyOffersAction(numberId));
+    if (numberId !== undefined) {
+      dispatch(fetchReviewsAction(numberId));
+      dispatch(fetchCurrentOfferAction(numberId));
+      dispatch(fetchNearbyOffersAction(numberId));
+    }
   }, [numberId]);
 
-  if (isOfferDataLoading) {
+  if (isOfferDataLoading || !currentOffer) {
     return <LoadingScreen />;
   }
 
-  if (!currentOffer) {
+  if (isServerError) {
     return <NotFoundPage />;
   }
 
@@ -85,12 +87,15 @@ function PropertyPage (): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
+              <div className={cn({
+                'property__mark': currentOffer.isPremium,
+              })}
+              >
                 <span>{(currentOffer.isPremium) && 'Premium'}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {}
+                  {currentOffer.title}
                 </h1>
                 <button
                   className={cn('property__bookmark-button button', {
@@ -99,7 +104,11 @@ function PropertyPage (): JSX.Element {
                   type="button"
                   onClick={handleFavoriteButtonClick}
                 >
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className={cn('property__bookmark-icon', {
+                    'property__bookmark-icon--active': currentOffer.isFavorite,
+                  })}
+                  width="31" height="33"
+                  >
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -114,7 +123,7 @@ function PropertyPage (): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {currentOffer.type}
+                  {WordToUpper(currentOffer.type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {currentOffer.bedrooms} Bedrooms
@@ -160,7 +169,7 @@ function PropertyPage (): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map selectedOffer={selectedOffer} offers={offersCity} classNameMap={classNamesMap.Property}></Map>
+            <Map offers={[...nearOffersCorrect, currentOffer] as OfferType[]} classNameMap={classNamesMap.Property}></Map>
           </section>
         </section>
         <div className="container">
@@ -168,7 +177,7 @@ function PropertyPage (): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {nearOffersCorrect.map((offer) => (
-                <Card offer={offer} setSelectedOffer={setSelectedOffer} key={offer.id}/>
+                <Card isNeedMouseLeave={!NEED_MOUSE_LEAVE} offer={offer} key={offer.id}/>
               ))}
             </div>
           </section>

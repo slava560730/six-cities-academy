@@ -70,4 +70,38 @@ const NULL_CITY_ID = 0;
 
 const SELECT_OPEN = true;
 
-export {SELECT_OPEN, NULL_CITY_ID, INITIAL_CITY, Namespace, FavoriteState, DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};
+const NEED_MOUSE_LEAVE = true;
+
+const REVIEW_RATING = [
+  {
+    title: 'perfect',
+    value: 5,
+  },
+  {
+    title: 'good',
+    value: 4,
+  },
+  {
+    title: 'not bad',
+    value: 3,
+  },
+  {
+    title: 'badly',
+    value: 2,
+  },
+  {
+    title: 'terribly',
+    value: 1,
+  },
+];
+
+const DEFAULT_REVIEW_STATE = {
+  comment: '',
+  rating: 0,
+};
+
+const MAX_REVIEWS = 10;
+
+const PASSWORD_NOTIFY = 'Пароль должен содержать одну цифру и одну букву';
+
+export {MAX_REVIEWS, DEFAULT_REVIEW_STATE, NEED_MOUSE_LEAVE, REVIEW_RATING, PASSWORD_NOTIFY, SELECT_OPEN, NULL_CITY_ID, INITIAL_CITY, Namespace, FavoriteState, DEFAULT_CITY, CITIES, SortType, APIRoute, MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH};

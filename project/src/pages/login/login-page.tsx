@@ -5,11 +5,15 @@ import {useRef, FormEvent} from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {PASSWORD_NOTIFY, INITIAL_CITY, CITIES} from '../../const';
+import {changeCity} from '../../store/app-process/app-process';
+import {getRandomArrayElement} from '../../utils';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
@@ -24,8 +28,15 @@ function LoginPage(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      dispatch(changeCity(INITIAL_CITY));
     }
   };
+
+  const showToast = () => {
+    toast(PASSWORD_NOTIFY);
+  };
+
+  const randomCity = getRandomArrayElement(CITIES);
 
   return (
     <div className="page page--gray page--login">
@@ -52,6 +63,7 @@ function LoginPage(): JSX.Element {
               method="post"
               onSubmit={handleSubmit}
             >
+              <ToastContainer />
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -70,22 +82,31 @@ function LoginPage(): JSX.Element {
                   className="login__input form__input"
                   type="password"
                   name="password"
+                  pattern="^(?=.*[A-Za-zА-Яа-яЁё])(?=.*[0-9]).{0,16}$"
                   placeholder="Password"
                   required
                 />
               </div>
               <button
+                onClick={showToast}
                 className="login__submit form__submit button"
                 type="submit"
               >
                 Sign in
               </button>
+              <ToastContainer />
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="/">
-                <span>Amsterdam</span>
+                <span
+                  onClick={() => {
+                    dispatch(changeCity(randomCity));
+                  }}
+                >
+                  {randomCity}
+                </span>
               </Link>
             </div>
           </section>

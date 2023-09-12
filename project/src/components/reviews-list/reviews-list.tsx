@@ -1,12 +1,12 @@
 import {useAppSelector} from '../../hooks';
 import {AddReviewItem} from '../review-item/review-item';
-import { getReviews } from '../../store/app-data/selectors';
+import { getSortedReviews } from '../../store/app-data/selectors';
 import { AddFormReview } from '../add-form-review/add-form-review';
 import { getAuthLoggedStatus } from '../../store/user-process/selectors';
 
 
 function AddReviewsList (): JSX.Element{
-  const reviews = useAppSelector(getReviews);
+  const reviews = useAppSelector(getSortedReviews);
   const isAuthLoggedStatus = useAppSelector(getAuthLoggedStatus);
 
   return (
